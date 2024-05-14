@@ -1,0 +1,51 @@
+.sidebar {
+  left: 0;
+  .navMenuOpen {
+    display: block;
+  }
+  .navMenuClose {
+    display: none;
+  }
+  &:has(.checkbox:checked) {
+    .navMenuOpen {
+      display: none;
+    }
+    .navMenuClose {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  &:has(.checkbox:checked) {
+    left: -222px;
+
+    ~ .mainContents {
+      margin-left: 66px;
+    }
+  }
+
+  ~ .mainContents {
+    margin-left: 288px;
+  }
+
+  .checkboxWrapper {
+    position: relative;
+    .sidebarOpen {
+      display: block;
+    }
+    .sidebarClose {
+      display: none;
+    }
+    .checkbox {
+      display: none;
+
+      &:checked {
+        ~ .sidebarOpen {
+          display: none;
+        }
+        ~ .sidebarClose {
+          display: block;
+        }
+      }
+    }
+  }
+}
