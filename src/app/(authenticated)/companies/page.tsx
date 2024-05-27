@@ -1,11 +1,7 @@
-import { CompaniesTable } from "@/features/companies/components";
+import { CompaniesTable } from "@/components/companies";
 
 const CompaniesPage = () => {
-  return (
-    <>
-      <CompaniesTable />
-    </>
-  );
+  return <CompaniesTable />;
 };
 
 export default CompaniesPage;

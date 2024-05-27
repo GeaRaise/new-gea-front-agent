@@ -1,4 +1,4 @@
-import { AuthedCheck } from "@/features/layouts";
+import { AuthedCheck } from "@/components/layouts";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { cookies } from "next/headers";

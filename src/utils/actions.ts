@@ -1,9 +1,8 @@
 import { BACKEND_URL } from "@/constants";
-import type { AgentUserType } from "@/lib/types/companies";
 import { cookies } from "next/headers";
 
-export const getAgentUsers = async (): Promise<AgentUserType[]> => {
-  const res = await fetch(`${BACKEND_URL}/api/agent/users`, {
+export const get = async <T>(api: string): Promise<T[]> => {
+  const res = await fetch(`${BACKEND_URL}/api/agent/${api}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

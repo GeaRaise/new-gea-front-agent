@@ -1,7 +1,7 @@
 "use client";
 
+import { NavLinkButton } from "@/components/elements";
 import { HomeIcon } from "@/components/icons";
-import { NavLinkButton } from "@/features/elements";
 
 const CloseNav = () => {
   return (
@@ -18,7 +18,7 @@ const CloseNav = () => {
             <NavLinkButton href="usersmanagement">所内担当者管理</NavLinkButton>
           </li>
           <li className="text-primary">
-            <NavLinkButton href="#">顧問先の所内担当者設定</NavLinkButton>
+            <NavLinkButton href="relations">顧問先の所内担当者設定</NavLinkButton>
           </li>
         </ul>
       </div>

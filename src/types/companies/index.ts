@@ -1,7 +1,7 @@
-import type { UserType } from "@/types";
+import type { UserType } from "..";
 
 /**
- * AgentAdvisor
+ * 顧問先表示タイプ
  */
 export type AgentUserType = {
   from_user?: number | null;

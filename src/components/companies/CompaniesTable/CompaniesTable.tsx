@@ -6,11 +6,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getAgentUsers } from "@/lib/data/companies";
+import type { AgentUserType } from "@/lib/types/companies";
+import { get } from "@/utils/actions";
 import { getStatusLabel } from "./action";
 
 const CompaniesTable = async () => {
-  const agentUsers = await getAgentUsers();
+  const agentUsers = await get<AgentUserType>("users");
 
   return (
     <Table>

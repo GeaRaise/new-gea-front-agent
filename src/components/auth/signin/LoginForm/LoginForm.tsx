@@ -1,9 +1,9 @@
 "use client";
 
+import { SubmitButton } from "@/components/elements";
 import { Input } from "@/components/ui/input";
-import { SubmitButton } from "@/features/elements";
 import { useFormState } from "react-dom";
-import { type FormStateType, handleLogin } from "../../utils/actions";
+import { type FormStateType, handleLogin } from "../../../../utils/auth/signin/actions";
 
 export const LoginForm = () => {
   const [formState, wrappedHandleLogin] = useFormState(handleLogin, {
@@ -22,7 +22,7 @@ export const LoginForm = () => {
         action={wrappedHandleLogin}
         className="w-full flex flex-col justify-center items-center gap-10"
       >
-        <div className="w-1/5 flex flex-col gap-4">
+        <div className="w-1/6 flex flex-col gap-4">
           <Input
             defaultValue={formState.email}
             placeholder="ログインID（メールアドレス）"
