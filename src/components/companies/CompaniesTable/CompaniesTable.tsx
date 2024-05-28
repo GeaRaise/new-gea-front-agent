@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { AgentUserType } from "@/lib/types/companies";
+import type { AgentUserType } from "@/types/companies";
 import { get } from "@/utils/actions";
 import { getStatusLabel } from "./action";
 
