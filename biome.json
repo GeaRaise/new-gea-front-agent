@@ -5,7 +5,8 @@
   },
   "linter": {
     "enabled": true,
-    "include": ["**/**/*.ts", "**/*.tsx"],
+    "ignore": ["public", "node_modules"],
+    "include": ["/src/**/*.ts", "/src/**/*.tsx"],
     "rules": {
       "all": true,
       "complexity": {
@@ -29,11 +30,11 @@
     "lineEnding": "lf",
     "lineWidth": 100
   },
-	"javascript": {
+  "javascript": {
     "formatter": {
       "enabled": true,
       "quoteStyle": "double",
-			"semicolons":"asNeeded"
+      "semicolons": "asNeeded"
     }
   }
 }

@@ -6,15 +6,6 @@ import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { loginSchema } from "./schema"
 
-export type FormStateType = {
-  email: string
-  password: string
-  errors: {
-    email: string | undefined
-    password: string | undefined
-  }
-}
-
 /**
  * ログイン処理
  */
@@ -22,43 +13,15 @@ export const handleLogin = async (_prevState: unknown, formData: FormData) => {
   const submission = parseWithZod(formData, {
     schema: loginSchema,
   })
+  // バリデーションエラーがある場合はエラーメッセージを返す
   if (submission.status !== "success") {
     return submission.reply()
   }
+  // ログインIDとパスワードを取得
   const email = formData.get("email") as string
   const password = formData.get("password") as string
 
-  // if (!email && !password) {
-  //   return {
-  //     email: "",
-  //     password: "",
-  //     errors: {
-  //       email: "メールアドレスを入力してください",
-  //       password: "パスワードを入力してください",
-  //     },
-  //   };
-  // }
-  // if (!email) {
-  //   return {
-  //     email: "",
-  //     password: "",
-  //     errors: {
-  //       email: "メールアドレスを入力してください",
-  //       password: undefined,
-  //     },
-  //   };
-  // }
-  // if (!password) {
-  //   return {
-  //     email: "",
-  //     password: "",
-  //     errors: {
-  //       email: undefined,
-  //       password: "パスワードを入力してください",
-  //     },
-  //   };
-  // }
-
+  // ログイン処理
   const result = await fetch(`${BACKEND_URL}/api/agent/token`, {
     method: "POST",
     headers: {
@@ -67,18 +30,24 @@ export const handleLogin = async (_prevState: unknown, formData: FormData) => {
     body: JSON.stringify({ email, password }),
     credentials: "include",
   }).then((res) => {
+    // ログイン失敗時はエラーメッセージを返す
     if (res.status !== 200) {
       return submission.reply({
-        formErrors: ["ログインに失敗しました"],
+        formErrors: ["ログインIDまたはパスワードが間違っています"],
       })
     }
-
+    // ログイン成功時はクッキーからトークンを取得し、リダイレクトする
     const cookiesHeader = res.headers.get("Set-Cookie")
     if (cookiesHeader) {
-      const tokenNames = ["gea_demo_token", "gea_prod_token", "gea_dev_token"]
+      const tokenNames = [
+        "gea_demo_token",
+        "gea_dev_token",
+        "gea_prod_token",
+        "gea_demo_refresh_token",
+      ]
       let token = null
-
       for (const tokenName of tokenNames) {
+        // クッキーからトークンを取得
         const tokenStartIndex = cookiesHeader.indexOf(`${tokenName}=`)
         if (tokenStartIndex !== -1) {
           const domainIndex = cookiesHeader.indexOf("; Domain", tokenStartIndex)
@@ -87,11 +56,9 @@ export const handleLogin = async (_prevState: unknown, formData: FormData) => {
               .substring(tokenStartIndex + tokenName.length + 1, domainIndex)
               .trim()
             cookies().set(tokenName, token)
-            redirect("/companies")
           }
         }
       }
-
       if (!token) {
         return submission.reply({
           formErrors: ["トークンの取得に失敗しました"],
@@ -102,9 +69,8 @@ export const handleLogin = async (_prevState: unknown, formData: FormData) => {
         formErrors: ["クッキーの取得に失敗しました"],
       })
     }
+    redirect("/companies")
   })
-
-  // redirect("/companies");
   return result
 }
 
@@ -120,6 +86,7 @@ export const handleLogout = async () => {
   }).then((res) => {
     if (res.status === 200) {
       cookies().delete("gea_demo_token")
+      cookies().delete("gea_demo_refresh_token")
       cookies().delete("gea_prod_token")
       cookies().delete("gea_dev_token")
       redirect("/auth/signin")

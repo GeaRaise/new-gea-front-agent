@@ -7,14 +7,6 @@ import { useForm } from "@conform-to/react"
 import { useFormState } from "react-dom"
 
 export const LoginForm = () => {
-  // const [formState, wrappedHandleLogin] = useFormState(handleLogin, {
-  //   email: "",
-  //   password: "",
-  //   errors: {
-  //     email: undefined,
-  //     password: undefined,
-  //   },
-  // } as FormStateType);
   const [lastResult, action] = useFormState(handleLogin, undefined)
   const [form, fields] = useForm({
     // 前回の送信結果を同期
@@ -29,6 +21,7 @@ export const LoginForm = () => {
     // shouldValidate: "onBlur",
     // shouldRevalidate: "onInput",
   })
+
   return (
     <div className="m-auto h-screen flex items-center flex-col justify-center gap-10">
       <h1 className="text-5xl text-primary font-extrabold tracking-widest">GEAREACH</h1>
@@ -45,22 +38,19 @@ export const LoginForm = () => {
             type="text"
             key={fields.email.key}
             name={fields.email.name}
-            // defaultValue={fields.email.initialValue}
           />
           <Input
             placeholder="パスワード"
             type="password"
             key={fields.password.key}
             name={fields.password.name}
-            // defaultValue={fields.password.initialValue}
           />
         </div>
         <SubmitButton label="ログイン" className="shadow-md min-w-32" />
-        {/* {formState.errors.email && <p className="text-red-500">{formState.errors.email}</p>} */}
-        {/* {formState.errors.password && <p className="text-red-500">{formState.errors.password}</p>} */}
         <div>
           <p className="text-red-500">{fields.email.errors}</p>
           <p className="text-red-500">{fields.password.errors}</p>
+          <p className="text-red-500">{form.errors}</p>
         </div>
       </form>
     </div>
