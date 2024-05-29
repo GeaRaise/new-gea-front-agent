@@ -1,7 +1,7 @@
-import { CompaniesTable } from "@/components/companies";
+import { CompaniesBody } from "@/components/companies";
 
 const CompaniesPage = () => {
-  return <CompaniesTable />;
+  return <CompaniesBody />;
 };
 
 export default CompaniesPage;

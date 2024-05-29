@@ -29,7 +29,7 @@ const NavLinkButton: FC<PropsType> = (props) => {
       type="button"
       onClick={() => handleLinkClick(href)}
       className={`${
-        isActiveNavLink.href === href ? "text-primary" : "text-black"
+        isActiveNavLink.href === href ? "text-primary font-bold" : "text-black"
       } transition duration-300 hover:text-primary`}
     >
       {children}

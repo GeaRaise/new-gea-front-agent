@@ -1,0 +1,16 @@
+{
+  "arrow component": {
+    "scope": "typescriptreact",
+    "prefix": "ac",
+    "body": [
+      "import type { FC } from 'react';",
+      "",
+      "const $1: FC = () => {",
+      "  return <div>$1</div>;",
+      "};",
+      "",
+      "export default $1;"
+    ],
+    "description": "Log output to console"
+  }
+}

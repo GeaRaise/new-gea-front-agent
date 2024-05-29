@@ -1,5 +1,5 @@
-import { AuthedCheck } from "./templates/AuthedCheck/AuthedCheck";
-import { Header } from "./templates/Header/Header";
-import { Sidebar } from "./templates/Sidebar/Sidebar";
+import { AuthedCheck } from "./templates/AuthedCheck";
+import { Header } from "./templates/Header";
+import { Sidebar } from "./templates/Sidebar";
 
 export { AuthedCheck, Header, Sidebar };

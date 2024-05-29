@@ -1,9 +1,9 @@
-import HeaderAvatar from "./HeaderAvator/HeaderAvatar";
-import HeaderNotification from "./HeaderNotification/HeaderNotification";
-import NavLinkButton from "./LinkButton/NavLinkButton";
-import Logo from "./Logo/Logo";
-import Spinner from "./Spinner/Spinner";
-import SubmitButton from "./SubmitButton/SubmitButton";
+import HeaderAvatar from "./HeaderAvator";
+import HeaderNotification from "./HeaderNotification";
+import NavLinkButton from "./LinkButton";
+import Logo from "./Logo";
+import Spinner from "./Spinner";
+import SubmitButton from "./SubmitButton";
 
 export {
   HeaderAvatar,

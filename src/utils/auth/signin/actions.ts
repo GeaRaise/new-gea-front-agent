@@ -57,6 +57,7 @@ export const handleLogin = async (_previousState: FormStateType, formData: FormD
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
+    credentials: "include",
   }).then((res) => {
     if (res.status !== 200) {
       return {
@@ -97,6 +98,7 @@ export const handleLogin = async (_previousState: FormStateType, formData: FormD
         redirect("/companies");
       }
     }
+    // redirect("/companies");
     return {
       email: "",
       password: "",

@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import type { ButtonHTMLAttributes, FC, ReactNode } from "react";
 import { useFormStatus } from "react-dom";
-import Spinner from "../Spinner/Spinner";
+import Spinner from "../Spinner";
 
 interface PropsType extends ButtonHTMLAttributes<HTMLButtonElement> {
   label?: string;

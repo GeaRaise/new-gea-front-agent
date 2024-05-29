@@ -10,7 +10,7 @@ const CloseNav = () => {
         <HomeIcon />
       </span>
       <div className="absolute hidden w-80  z-10 hover:flex peer-hover:flex left-4 top-0 pl-8">
-        <ul className="flex-col bg-white shadow-xl px-10 py-4 gap-3 rounded-md min-w-48">
+        <ul className="flex flex-col bg-white shadow-xl px-10 py-5 gap-2 rounded-md min-w-48">
           <li className="text-primary">
             <NavLinkButton href="companies">顧問先管理</NavLinkButton>
           </li>

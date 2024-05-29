@@ -8,6 +8,7 @@ export const get = async <T>(api: string): Promise<T[]> => {
       "Content-Type": "application/json",
       Cookie: cookies().toString(),
     },
+    credentials: "include",
     cache: "no-cache",
   });
   const data = await res.json();

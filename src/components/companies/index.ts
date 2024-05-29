@@ -1,2 +1,2 @@
-import CompaniesTable from "./CompaniesTable/CompaniesTable";
-export { CompaniesTable };
+import CompaniesBody from "./CompaniesBody/index";
+export { CompaniesBody };
