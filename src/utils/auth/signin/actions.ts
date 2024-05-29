@@ -1,8 +1,10 @@
 "use server";
 
 import { BACKEND_URL } from "@/constants";
+import { parseWithZod } from "@conform-to/zod";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { loginSchema } from "./schema";
 
 export type FormStateType = {
   email: string;
@@ -16,40 +18,46 @@ export type FormStateType = {
 /**
  * ログイン処理
  */
-export const handleLogin = async (_previousState: FormStateType, formData: FormData) => {
+export const handleLogin = async (_prevState: unknown, formData: FormData) => {
+  const submission = parseWithZod(formData, {
+    schema: loginSchema,
+  });
+  if (submission.status !== "success") {
+    return submission.reply();
+  }
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
-  if (!email && !password) {
-    return {
-      email: "",
-      password: "",
-      errors: {
-        email: "メールアドレスを入力してください",
-        password: "パスワードを入力してください",
-      },
-    };
-  }
-  if (!email) {
-    return {
-      email: "",
-      password: "",
-      errors: {
-        email: "メールアドレスを入力してください",
-        password: undefined,
-      },
-    };
-  }
-  if (!password) {
-    return {
-      email: "",
-      password: "",
-      errors: {
-        email: undefined,
-        password: "パスワードを入力してください",
-      },
-    };
-  }
+  // if (!email && !password) {
+  //   return {
+  //     email: "",
+  //     password: "",
+  //     errors: {
+  //       email: "メールアドレスを入力してください",
+  //       password: "パスワードを入力してください",
+  //     },
+  //   };
+  // }
+  // if (!email) {
+  //   return {
+  //     email: "",
+  //     password: "",
+  //     errors: {
+  //       email: "メールアドレスを入力してください",
+  //       password: undefined,
+  //     },
+  //   };
+  // }
+  // if (!password) {
+  //   return {
+  //     email: "",
+  //     password: "",
+  //     errors: {
+  //       email: undefined,
+  //       password: "パスワードを入力してください",
+  //     },
+  //   };
+  // }
 
   const result = await fetch(`${BACKEND_URL}/api/agent/token`, {
     method: "POST",
@@ -60,19 +68,14 @@ export const handleLogin = async (_previousState: FormStateType, formData: FormD
     credentials: "include",
   }).then((res) => {
     if (res.status !== 200) {
-      return {
-        email: "",
-        password: "",
-        errors: {
-          email: "メールアドレスまたはパスワードが正しくありません",
-          password: undefined,
-        },
-      };
+      return submission.reply({
+        formErrors: ["ログインに失敗しました"],
+      });
     }
+
     if (res.headers !== null) {
       const inputString = res.headers.get("Set-Cookie") as string;
       // console.log(inputString);
-
       // スタート位置を取得
       const tokenStartIndex = inputString.indexOf(
         "gea_demo_token=" || "gea_prod_token=" || "gea_dev_token=",
@@ -80,10 +83,8 @@ export const handleLogin = async (_previousState: FormStateType, formData: FormD
       // const refreshTokenStartIndex = inputString.indexOf(
       //   "gea_dev_refresh_token=" || "gea_prod_refresh_token=" || "gea_demo_refresh_token=",
       // );
-
       // 'Domain' の位置を見つける
       const domainIndex = inputString.indexOf("; Domain", tokenStartIndex);
-
       // 'gea_demo_token=' の位置が見つかった場合
       if (tokenStartIndex !== -1 && domainIndex !== -1) {
         // 'gea_demo_token=' の後から '; Domain' の前までの文字列を取得
@@ -98,17 +99,8 @@ export const handleLogin = async (_previousState: FormStateType, formData: FormD
         redirect("/companies");
       }
     }
-    // redirect("/companies");
-    return {
-      email: "",
-      password: "",
-      errors: {
-        email: undefined,
-        password: undefined,
-      },
-    };
   });
-
+  // redirect("/companies");
   return result;
 };
 

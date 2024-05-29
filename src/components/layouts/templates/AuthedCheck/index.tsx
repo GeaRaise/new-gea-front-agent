@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { type FC, type ReactNode, useEffect } from "react";
+import { useEffect, type FC, type ReactNode } from "react";
 
 const NOT_AUTHED_PAGE_LIST = [
   "/",
@@ -26,11 +26,11 @@ export const AuthedCheck: FC<PropsType> = (props) => {
   // pathnameがNOT_AUTHED_PAGE_LISTに含まれているかどうか
   const isNotAuthedPage = NOT_AUTHED_PAGE_LIST.includes(pathName);
   // isNotAuthedPageがfalseの場合は/auth/signinに遷移する
-  useEffect(() => {
-    if (!(isLogined || isNotAuthedPage)) {
-      router.push("/auth/signin");
-    }
-  }, [isLogined, isNotAuthedPage, router]);
+  // useEffect(() => {
+  //   if (!(isLogined || isNotAuthedPage)) {
+  //     router.push("/auth/signin");
+  //   }
+  // }, [isLogined, isNotAuthedPage, router]);
 
   return <div>{children}</div>;
 };
