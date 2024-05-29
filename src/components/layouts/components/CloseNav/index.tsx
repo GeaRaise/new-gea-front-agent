@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import { NavLinkButton } from "@/components/elements";
-import { HomeIcon } from "@/components/icons";
+import { NavLinkButton } from "@/components/elements"
+import { HomeIcon } from "@/components/icons"
 
 const CloseNav = () => {
   return (
@@ -23,7 +23,7 @@ const CloseNav = () => {
         </ul>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CloseNav;
+export default CloseNav

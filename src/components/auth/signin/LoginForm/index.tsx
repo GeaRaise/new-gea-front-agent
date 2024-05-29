@@ -1,10 +1,10 @@
-"use client";
+"use client"
 
-import { SubmitButton } from "@/components/elements";
-import { Input } from "@/components/ui/input";
-import { handleLogin } from "@/utils/auth/signin/actions";
-import { useForm } from "@conform-to/react";
-import { useFormState } from "react-dom";
+import { SubmitButton } from "@/components/elements"
+import { Input } from "@/components/ui/input"
+import { handleLogin } from "@/utils/auth/signin/actions"
+import { useForm } from "@conform-to/react"
+import { useFormState } from "react-dom"
 
 export const LoginForm = () => {
   // const [formState, wrappedHandleLogin] = useFormState(handleLogin, {
@@ -15,7 +15,7 @@ export const LoginForm = () => {
   //     password: undefined,
   //   },
   // } as FormStateType);
-  const [lastResult, action] = useFormState(handleLogin, undefined);
+  const [lastResult, action] = useFormState(handleLogin, undefined)
   const [form, fields] = useForm({
     // 前回の送信結果を同期
     lastResult,
@@ -28,7 +28,7 @@ export const LoginForm = () => {
     // blurイベント発生時にフォームを検証する
     // shouldValidate: "onBlur",
     // shouldRevalidate: "onInput",
-  });
+  })
   return (
     <div className="m-auto h-screen flex items-center flex-col justify-center gap-10">
       <h1 className="text-5xl text-primary font-extrabold tracking-widest">GEAREACH</h1>
@@ -64,5 +64,5 @@ export const LoginForm = () => {
         </div>
       </form>
     </div>
-  );
-};
+  )
+}

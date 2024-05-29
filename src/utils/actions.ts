@@ -1,5 +1,5 @@
-import { BACKEND_URL } from "@/constants";
-import { cookies } from "next/headers";
+import { BACKEND_URL } from "@/constants"
+import { cookies } from "next/headers"
 
 export const get = async <T>(api: string): Promise<T[]> => {
   const res = await fetch(`${BACKEND_URL}/api/agent/${api}`, {
@@ -10,7 +10,7 @@ export const get = async <T>(api: string): Promise<T[]> => {
     },
     credentials: "include",
     cache: "no-cache",
-  });
-  const data = await res.json();
-  return data;
-};
+  })
+  const data = await res.json()
+  return data
+}

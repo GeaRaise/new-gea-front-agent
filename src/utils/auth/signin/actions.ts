@@ -1,19 +1,19 @@
-"use server";
+"use server"
 
-import { BACKEND_URL } from "@/constants";
-import { parseWithZod } from "@conform-to/zod";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { loginSchema } from "./schema";
+import { BACKEND_URL } from "@/constants"
+import { parseWithZod } from "@conform-to/zod"
+import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
+import { loginSchema } from "./schema"
 
 export type FormStateType = {
-  email: string;
-  password: string;
+  email: string
+  password: string
   errors: {
-    email: string | undefined;
-    password: string | undefined;
-  };
-};
+    email: string | undefined
+    password: string | undefined
+  }
+}
 
 /**
  * ログイン処理
@@ -21,12 +21,12 @@ export type FormStateType = {
 export const handleLogin = async (_prevState: unknown, formData: FormData) => {
   const submission = parseWithZod(formData, {
     schema: loginSchema,
-  });
+  })
   if (submission.status !== "success") {
-    return submission.reply();
+    return submission.reply()
   }
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
+  const email = formData.get("email") as string
+  const password = formData.get("password") as string
 
   // if (!email && !password) {
   //   return {
@@ -70,39 +70,43 @@ export const handleLogin = async (_prevState: unknown, formData: FormData) => {
     if (res.status !== 200) {
       return submission.reply({
         formErrors: ["ログインに失敗しました"],
-      });
+      })
     }
 
-    if (res.headers !== null) {
-      const inputString = res.headers.get("Set-Cookie") as string;
-      // console.log(inputString);
-      // スタート位置を取得
-      const tokenStartIndex = inputString.indexOf(
-        "gea_demo_token=" || "gea_prod_token=" || "gea_dev_token=",
-      );
-      // const refreshTokenStartIndex = inputString.indexOf(
-      //   "gea_dev_refresh_token=" || "gea_prod_refresh_token=" || "gea_demo_refresh_token=",
-      // );
-      // 'Domain' の位置を見つける
-      const domainIndex = inputString.indexOf("; Domain", tokenStartIndex);
-      // 'gea_demo_token=' の位置が見つかった場合
-      if (tokenStartIndex !== -1 && domainIndex !== -1) {
-        // 'gea_demo_token=' の後から '; Domain' の前までの文字列を取得
-        const token = inputString
-          .substring(tokenStartIndex + "gea_demo_token=".length, domainIndex)
-          .trim();
-        // const refreshToken = inputString
-        //   .substring(refreshTokenStartIndex + "gea_demo_refresh_token=".length, domainIndex)
-        //   .trim();
-        cookies().set("gea_demo_token", token);
-        // cookies().set("gea_demo_refresh_token", refreshToken);
-        redirect("/companies");
+    const cookiesHeader = res.headers.get("Set-Cookie")
+    if (cookiesHeader) {
+      const tokenNames = ["gea_demo_token", "gea_prod_token", "gea_dev_token"]
+      let token = null
+
+      for (const tokenName of tokenNames) {
+        const tokenStartIndex = cookiesHeader.indexOf(`${tokenName}=`)
+        if (tokenStartIndex !== -1) {
+          const domainIndex = cookiesHeader.indexOf("; Domain", tokenStartIndex)
+          if (domainIndex !== -1) {
+            token = cookiesHeader
+              .substring(tokenStartIndex + tokenName.length + 1, domainIndex)
+              .trim()
+            cookies().set(tokenName, token)
+            redirect("/companies")
+          }
+        }
       }
+
+      if (!token) {
+        return submission.reply({
+          formErrors: ["トークンの取得に失敗しました"],
+        })
+      }
+    } else {
+      return submission.reply({
+        formErrors: ["クッキーの取得に失敗しました"],
+      })
     }
-  });
+  })
+
   // redirect("/companies");
-  return result;
-};
+  return result
+}
 
 /**
  * ログアウト処理
@@ -115,12 +119,12 @@ export const handleLogout = async () => {
     },
   }).then((res) => {
     if (res.status === 200) {
-      cookies().delete("gea_demo_token");
-      cookies().delete("gea_prod_token");
-      cookies().delete("gea_dev_token");
-      redirect("/auth/signin");
+      cookies().delete("gea_demo_token")
+      cookies().delete("gea_prod_token")
+      cookies().delete("gea_dev_token")
+      redirect("/auth/signin")
     } else {
-      console.info("ログアウトできませんでした");
+      console.info("ログアウトできませんでした")
     }
-  });
-};
+  })
+}

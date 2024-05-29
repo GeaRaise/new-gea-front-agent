@@ -1,31 +1,39 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.7.3/schema.json",
-	"organizeImports": {
-		"enabled": true
-	},
-	"linter": {
-		"enabled": true,
-		"include": ["**/**/*.ts", "**/*.tsx"],
-		"rules": {
-			"all": true,
-			"complexity": {
-				"useSimplifiedLogicExpression": "off"
-			},
-			"style": {
-				"noDefaultExport": "off",
-				"useNamingConvention": "off",
-				"noNamespaceImport": "off"
-			}
-		}
-	},
-	"formatter": {
-		"enabled": true,
-		"formatWithErrors": false,
-		"ignore": [],
-		"attributePosition": "auto",
-		"indentStyle": "space",
-		"indentWidth": 2,
-		"lineEnding": "lf",
-		"lineWidth": 100
-	}
+  "$schema": "https://biomejs.dev/schemas/1.7.3/schema.json",
+  "organizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "include": ["**/**/*.ts", "**/*.tsx"],
+    "rules": {
+      "all": true,
+      "complexity": {
+        "useSimplifiedLogicExpression": "off",
+        "noExcessiveCognitiveComplexity": "off"
+      },
+      "style": {
+        "noDefaultExport": "off",
+        "useNamingConvention": "off",
+        "noNamespaceImport": "off"
+      }
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "ignore": [],
+    "attributePosition": "auto",
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 100
+  },
+	"javascript": {
+    "formatter": {
+      "enabled": true,
+      "quoteStyle": "double",
+			"semicolons":"asNeeded"
+    }
+  }
 }

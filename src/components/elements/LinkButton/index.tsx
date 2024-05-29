@@ -1,28 +1,28 @@
-"use client";
+"use client"
 
-import type { FC, ReactNode } from "react";
+import type { FC, ReactNode } from "react"
 
-import { useStateSWR } from "@/hooks/useSWR/useStateSWR";
-import { useRouter } from "next/navigation";
+import { useStateSWR } from "@/hooks/useSWR/useStateSWR"
+import { useRouter } from "next/navigation"
 
 type PropsType = {
-  children: ReactNode;
-  href: string;
-};
+  children: ReactNode
+  href: string
+}
 
 const NavLinkButton: FC<PropsType> = (props) => {
-  const { children, href } = props;
-  const router = useRouter();
+  const { children, href } = props
+  const router = useRouter()
   const [isActiveNavLink, setIsActiveNavLink] = useStateSWR<{
-    href: string;
+    href: string
   }>("isNavActive", {
     href: "companies",
-  });
+  })
 
   const handleLinkClick = (href: string) => {
-    setIsActiveNavLink({ href });
-    router.push(`/${href}`);
-  };
+    setIsActiveNavLink({ href })
+    router.push(`/${href}`)
+  }
 
   return (
     <button
@@ -34,7 +34,7 @@ const NavLinkButton: FC<PropsType> = (props) => {
     >
       {children}
     </button>
-  );
-};
+  )
+}
 
-export default NavLinkButton;
+export default NavLinkButton

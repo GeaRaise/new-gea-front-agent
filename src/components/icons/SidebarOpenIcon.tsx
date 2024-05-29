@@ -1,13 +1,13 @@
-import type { CSSProperties, FC } from "react";
+import type { CSSProperties, FC } from "react"
 
 /** Propsの型定義 */
 interface PropsType {
-  style?: CSSProperties;
-  color?: string;
+  style?: CSSProperties
+  color?: string
 }
 
 export const SidebarOpenIcon: FC<PropsType> = (props) => {
-  const { style, color } = props;
+  const { style, color } = props
 
   return (
     <svg
@@ -24,5 +24,5 @@ export const SidebarOpenIcon: FC<PropsType> = (props) => {
         fill={color || "#AFAEB3"}
       />
     </svg>
-  );
-};
+  )
+}

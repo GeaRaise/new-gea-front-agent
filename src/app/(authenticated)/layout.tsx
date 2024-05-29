@@ -1,5 +1,5 @@
-import { Header, Sidebar } from "@/components/layouts";
-import type { ReactNode } from "react";
+import { Header, Sidebar } from "@/components/layouts"
+import type { ReactNode } from "react"
 
 const AuthenticatedLayout = ({ children }: { children: ReactNode }) => {
   return (
@@ -7,7 +7,7 @@ const AuthenticatedLayout = ({ children }: { children: ReactNode }) => {
       <Header />
       <Sidebar>{children}</Sidebar>
     </>
-  );
-};
+  )
+}
 
-export default AuthenticatedLayout;
+export default AuthenticatedLayout

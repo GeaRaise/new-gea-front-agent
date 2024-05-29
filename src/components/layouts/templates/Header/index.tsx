@@ -1,8 +1,8 @@
-import { HeaderAvatar, HeaderNotification, Logo, SubmitButton } from "@/components/elements";
-import { handleLogout } from "@/utils/auth/signin/actions";
-import Link from "next/link";
+import { HeaderAvatar, HeaderNotification, Logo, SubmitButton } from "@/components/elements"
+import { handleLogout } from "@/utils/auth/signin/actions"
+import Link from "next/link"
 
-import type { FC } from "react";
+import type { FC } from "react"
 
 export const Header: FC = () => {
   return (
@@ -18,5 +18,5 @@ export const Header: FC = () => {
         </form>
       </div>
     </div>
-  );
-};
+  )
+}

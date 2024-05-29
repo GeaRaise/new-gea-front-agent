@@ -1,5 +1,5 @@
 const RelationsPage = () => {
-  return <div>RelationsPage</div>;
-};
+  return <div>RelationsPage</div>
+}
 
-export default RelationsPage;
+export default RelationsPage

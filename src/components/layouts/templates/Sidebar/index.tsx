@@ -1,15 +1,15 @@
-import type { FC, ReactNode } from "react";
-import styles from "./sidebar.module.scss";
+import type { FC, ReactNode } from "react"
+import styles from "./sidebar.module.scss"
 
-import { SidebarCloseIcon, SidebarOpenIcon } from "@/components/icons";
-import { CloseNav, OpenNav } from "../../components";
+import { SidebarCloseIcon, SidebarOpenIcon } from "@/components/icons"
+import { CloseNav, OpenNav } from "../../components"
 
 type PropsType = {
-  children: ReactNode;
-};
+  children: ReactNode
+}
 
 export const Sidebar: FC<PropsType> = (props) => {
-  const { children } = props;
+  const { children } = props
 
   return (
     <div>
@@ -46,5 +46,5 @@ export const Sidebar: FC<PropsType> = (props) => {
         {children}
       </main>
     </div>
-  );
-};
+  )
+}

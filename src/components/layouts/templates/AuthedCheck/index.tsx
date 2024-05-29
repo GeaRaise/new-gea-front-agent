@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, type FC, type ReactNode } from "react";
+import { usePathname, useRouter } from "next/navigation"
+import { useEffect, type FC, type ReactNode } from "react"
 
 const NOT_AUTHED_PAGE_LIST = [
   "/",
@@ -11,20 +11,20 @@ const NOT_AUTHED_PAGE_LIST = [
   "/geareach_termsofservice",
   "/policy",
   "/termsofservice",
-];
+]
 
 type PropsType = {
-  children: ReactNode;
-  isLogined: boolean;
-};
+  children: ReactNode
+  isLogined: boolean
+}
 
 export const AuthedCheck: FC<PropsType> = (props) => {
-  const { children, isLogined } = props;
-  const router = useRouter();
+  const { children, isLogined } = props
+  const router = useRouter()
   //   クエリパラメータ
-  const pathName = usePathname();
+  const pathName = usePathname()
   // pathnameがNOT_AUTHED_PAGE_LISTに含まれているかどうか
-  const isNotAuthedPage = NOT_AUTHED_PAGE_LIST.includes(pathName);
+  const isNotAuthedPage = NOT_AUTHED_PAGE_LIST.includes(pathName)
   // isNotAuthedPageがfalseの場合は/auth/signinに遷移する
   // useEffect(() => {
   //   if (!(isLogined || isNotAuthedPage)) {
@@ -32,5 +32,5 @@ export const AuthedCheck: FC<PropsType> = (props) => {
   //   }
   // }, [isLogined, isNotAuthedPage, router]);
 
-  return <div>{children}</div>;
-};
+  return <div>{children}</div>
+}

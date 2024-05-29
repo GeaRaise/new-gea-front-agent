@@ -1,4 +1,4 @@
-import CloseNav from "./CloseNav";
-import OpenNav from "./OpenNav";
+import CloseNav from "./CloseNav"
+import OpenNav from "./OpenNav"
 
-export { CloseNav, OpenNav };
+export { CloseNav, OpenNav }

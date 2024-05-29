@@ -1,11 +1,11 @@
-import { NavLinkButton } from "@/components/elements";
-import { HomeIcon } from "@/components/icons";
+import { NavLinkButton } from "@/components/elements"
+import { HomeIcon } from "@/components/icons"
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from "@/components/ui/accordion"
 
 const OpenNav = () => {
   return (
@@ -28,7 +28,7 @@ const OpenNav = () => {
         </AccordionContent>
       </AccordionItem>
     </Accordion>
-  );
-};
+  )
+}
 
-export default OpenNav;
+export default OpenNav

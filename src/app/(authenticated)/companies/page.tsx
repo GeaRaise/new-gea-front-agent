@@ -1,7 +1,7 @@
-import { CompaniesBody } from "@/components/companies";
+import { CompaniesBody } from "@/components/companies"
 
 const CompaniesPage = () => {
-  return <CompaniesBody />;
-};
+  return <CompaniesBody />
+}
 
-export default CompaniesPage;
+export default CompaniesPage

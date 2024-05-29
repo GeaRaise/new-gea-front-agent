@@ -1,7 +1,7 @@
-import { ImportIcon } from "@/components/icons";
-import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
-import type { FC } from "react";
+import { ImportIcon } from "@/components/icons"
+import { Button } from "@/components/ui/button"
+import { PlusCircle } from "lucide-react"
+import type { FC } from "react"
 
 const CompaniesAction: FC = () => {
   return (
@@ -26,7 +26,7 @@ const CompaniesAction: FC = () => {
         代理登録
       </Button>
     </div>
-  );
-};
+  )
+}
 
-export default CompaniesAction;
+export default CompaniesAction

@@ -1,5 +1,5 @@
-import { BellIcon } from "@/components/icons";
-import type { FC } from "react";
+import { BellIcon } from "@/components/icons"
+import type { FC } from "react"
 
 const HeaderNotification: FC = () => {
   return (
@@ -9,7 +9,7 @@ const HeaderNotification: FC = () => {
         <p>3</p>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default HeaderNotification;
+export default HeaderNotification

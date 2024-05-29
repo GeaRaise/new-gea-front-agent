@@ -1,5 +1,5 @@
 // schema.ts
-import { z } from "zod";
+import { z } from "zod"
 
 export const loginSchema = z.object({
   email: z
@@ -10,4 +10,4 @@ export const loginSchema = z.object({
   password: z.string({
     required_error: "パスワードを入力してください",
   }),
-});
+})

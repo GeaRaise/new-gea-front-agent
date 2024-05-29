@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import type { FC } from "react"
 
 const Spinner: FC = () => {
   return (
@@ -21,7 +21,7 @@ const Spinner: FC = () => {
       </svg>
       <span className="sr-only">Loading...</span>
     </div>
-  );
-};
+  )
+}
 
-export default Spinner;
+export default Spinner

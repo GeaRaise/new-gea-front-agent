@@ -1,8 +1,8 @@
-"use client";
+"use client"
 
-import type { FC } from "react";
+import type { FC } from "react"
 
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
@@ -10,7 +10,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/ui/select"
 import {
   Table,
   TableBody,
@@ -18,19 +18,19 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { useAgentFilter } from "@/hooks/companies/useAgentFilter";
-import type { AgentUserType } from "@/types/companies";
-import { getStatusLabel } from "./action";
+} from "@/components/ui/table"
+import { useAgentFilter } from "@/hooks/companies/useAgentFilter"
+import type { AgentUserType } from "@/types/companies"
+import { getStatusLabel } from "./action"
 
 type PropsType = {
-  agentUsers: AgentUserType[];
-};
+  agentUsers: AgentUserType[]
+}
 
 const CompaniesTable: FC<PropsType> = (props) => {
-  const { agentUsers } = props;
+  const { agentUsers } = props
 
-  const { agentUserFilter, filteredUsers } = useAgentFilter(agentUsers);
+  const { agentUserFilter, filteredUsers } = useAgentFilter(agentUsers)
 
   return (
     <>
@@ -124,7 +124,7 @@ const CompaniesTable: FC<PropsType> = (props) => {
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default CompaniesTable;
+export default CompaniesTable
