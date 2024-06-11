@@ -23,7 +23,7 @@ export const Sidebar: FC<PropsType> = (props) => {
               type="checkbox"
               name="sample"
               className={`peer ${styles.checkbox}`}
-              defaultChecked={true}
+              defaultChecked={false}
             />
             <span className={`cursor-pointer ${styles.sidebarClose}`}>
               <SidebarCloseIcon color="var(--secondary)" />
