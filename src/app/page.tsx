@@ -9,7 +9,7 @@ const Home: NextPage = () => {
         <Link className="px-4 py-2 bg-primary rounded-md text-white shadow-md" href="#">
           会員登録する
         </Link>
-        <Link className="px-4 py-2 bg-secondary rounded-md text-white shadow-md" href="auth/signin">
+        <Link className="px-4 py-2 bg-secondary rounded-md text-white shadow-md" href="signin">
           ログイン
         </Link>
       </div>

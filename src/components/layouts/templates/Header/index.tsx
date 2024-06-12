@@ -1,12 +1,12 @@
 import { HeaderAvatar, HeaderNotification, Logo, SubmitButton } from "@/components/elements"
-import { handleLogout } from "@/utils/auth/signin/actions"
+import { handleLogout } from "@/utils/signin/actions"
 import Link from "next/link"
 
 import type { FC } from "react"
 
 export const Header: FC = () => {
   return (
-    <div className="fixed left-0 top-0 flex h-16 w-screen items-center justify-between px-8">
+    <div className="fixed left-0 top-0 flex h-16 w-screen items-center justify-between px-8 bg-white">
       <Link href="/companies">
         <Logo />
       </Link>

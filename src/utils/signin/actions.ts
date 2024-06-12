@@ -69,7 +69,7 @@ export const handleLogin = async (_prevState: unknown, formData: FormData) => {
         formErrors: ["クッキーの取得に失敗しました"],
       })
     }
-    redirect("/companies")
+    redirect("/clients")
   })
   return result
 }
@@ -89,7 +89,7 @@ export const handleLogout = async () => {
       cookies().delete("gea_demo_refresh_token")
       cookies().delete("gea_prod_token")
       cookies().delete("gea_dev_token")
-      redirect("/auth/signin")
+      redirect("/signin")
     } else {
       console.info("ログアウトできませんでした")
     }

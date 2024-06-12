@@ -10,10 +10,10 @@ export function middleware(request: NextRequest) {
   if (cookies) {
     return NextResponse.next()
   }
-  return NextResponse.redirect(new URL("/auth/signin", request.url))
+  return NextResponse.redirect(new URL("/signin", request.url))
 }
 
 // ログインが必要なページのパスを指定
 export const config = {
-  matcher: ["/companies/:path*", "/usersmanagement/:path*", "/relations/:path*"],
+  matcher: ["/clients/:path*", "/usersmanagement/:path*", "/relations/:path*"],
 }

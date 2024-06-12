@@ -15,16 +15,18 @@ const config = {
         "2xl": "1400px",
       },
     },
-    fontFamily: {
-      NotoSansJp: ["Noto Sans JP", "sans-serif"],
-    },
     extend: {
+      fontFamily: {
+        notoSansJp: ["var(--noto-sans-jp)"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         geagray: "var(--geagray)",
+        geatext: "var(--geatext)",
+        geatextgray: "var(--geatextgray)",
         foreground: "hsl(var(--foreground))",
         primary: {
           DEFAULT: "var(--primary)",

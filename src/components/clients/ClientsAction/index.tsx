@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { PlusCircle } from "lucide-react"
 import type { FC } from "react"
 
-const CompaniesAction: FC = () => {
+const ClientsAction: FC = () => {
   return (
     <div className="flex justify-end gap-4 w-full mb-11 items-center">
       <Button
@@ -29,4 +29,4 @@ const CompaniesAction: FC = () => {
   )
 }
 
-export default CompaniesAction
+export default ClientsAction
