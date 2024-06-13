@@ -18,7 +18,7 @@ const OpenNav = () => {
           </div>
         </AccordionTrigger>
         <AccordionContent className="">
-          <NavLinkButton href="companies">顧問先管理</NavLinkButton>
+          <NavLinkButton href="clients">顧問先管理</NavLinkButton>
         </AccordionContent>
         <AccordionContent>
           <NavLinkButton href="usersmanagement">所内担当者管理</NavLinkButton>
