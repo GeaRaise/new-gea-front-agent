@@ -35,6 +35,7 @@ const ClientsTable = <TData, TValue>({ columns, data }: PropsType<TData, TValue>
       value: "すべて",
     },
   ])
+
   const table = useReactTable({
     data,
     columns,
@@ -43,7 +44,6 @@ const ClientsTable = <TData, TValue>({ columns, data }: PropsType<TData, TValue>
     getFilteredRowModel: getFilteredRowModel(),
     onGlobalFilterChange: setFiltering,
     onColumnFiltersChange: setColumnFilters,
-
     state: {
       columnFilters,
       globalFilter: filtering,
@@ -92,16 +92,20 @@ const ClientsTable = <TData, TValue>({ columns, data }: PropsType<TData, TValue>
           </div>
         }
       />
-      <div className="">
-        <Table className="min-w-[800px]">
-          <TableHeader className="bg-gray-50 w-full">
+      <div className="overflow-x-auto">
+        <Table className={`grid`}>
+          <TableHeader className="bg-gray-50 grid">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="flex w-full">
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
                       key={header.id}
-                      className={`max-w-[${header.getSize()}%] w-[${header.getSize()}%] min-w-[${header.getSize()}%]`}
+                      className={`flex justify-center items-center`}
+                      style={{
+                        minWidth: header.column.columnDef.meta?.minWidth,
+                        flexBasis: header.column.columnDef.meta?.width,
+                      }}
                     >
                       {header.isPlaceholder
                         ? null
@@ -112,18 +116,24 @@ const ClientsTable = <TData, TValue>({ columns, data }: PropsType<TData, TValue>
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody>
+          <TableBody className="grid">
             {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => {
                 return (
-                  <TableRow key={row.id}>
+                  <TableRow key={row.id} className="flex">
                     {row.getVisibleCells().map((cell) => {
                       return (
                         <TableCell
                           key={cell.id}
-                          className={`max-w-[${cell.column.getSize()}%] w-[${cell.column.getSize()}%] min-w-[${cell.column.getSize()}%] truncate text-geatext`}
+                          className={`flex text-geatext items-center`}
+                          style={{
+                            minWidth: cell.column.columnDef.meta?.minWidth,
+                            flexBasis: cell.column.columnDef.meta?.width,
+                          }}
                         >
-                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                          <p className="truncate">
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                          </p>
                         </TableCell>
                       )
                     })}
