@@ -1,9 +1,7 @@
 "use client"
-
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import ClientsPopAction from "@/components/clients/ClientsPopAction"
 import type { ClientType } from "@/types/clients"
 import type { ColumnDef, RowData } from "@tanstack/react-table"
-import { Ellipsis } from "lucide-react"
 import { getIsActiveStatusLabel } from "../actions"
 
 declare module "@tanstack/react-table" {
@@ -33,7 +31,7 @@ export const columns: ColumnDef<ClientType>[] = [
       return <div>顧問先会社名</div>
     },
     meta: {
-      width: "15%",
+      width: "20%",
       minWidth: "145px",
     },
   },
@@ -44,7 +42,7 @@ export const columns: ColumnDef<ClientType>[] = [
       return <div>顧問先担当者名</div>
     },
     meta: {
-      width: "15%",
+      width: "20%",
       minWidth: "145px",
     },
   },
@@ -55,7 +53,7 @@ export const columns: ColumnDef<ClientType>[] = [
       return <div>登録メールアドレス</div>
     },
     meta: {
-      width: "15%",
+      width: "28%",
       minWidth: "215px",
     },
   },
@@ -83,21 +81,18 @@ export const columns: ColumnDef<ClientType>[] = [
     enableGlobalFilter: false,
     meta: {
       width: "5%",
-      minWidth: "60px",
+      minWidth: "65px",
     },
-    cell: () => {
-      return (
-        <Popover>
-          <PopoverTrigger>
-            <Ellipsis />
-          </PopoverTrigger>
-          <PopoverContent className="w-40 p-5 flex flex-col items-start gap-3" align="start">
-            <button className="text-geatextgray transition-all hover:text-geatext">代理登録</button>
-            <button className="text-geatextgray transition-all hover:text-geatext">新規招待</button>
-            <button className="text-primary transition-all hover:text-red-800">削除</button>
-          </PopoverContent>
-        </Popover>
-      )
+    cell: (info) => {
+      const { user } = info.row.original
+      // 招待情報が不足しているかどうか
+      const isLack =
+        user.profile.company.name === undefined ||
+        user.profile.first_name === undefined ||
+        user.profile.last_name === undefined ||
+        user.email === undefined
+
+      return <ClientsPopAction statusId={user.is_active} isLack={isLack} />
     },
   },
 ]

@@ -9,17 +9,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { statusFilterItems } from "@/constants/clients"
-import {
-  type ColumnDef,
-  type ColumnFiltersState,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  useReactTable,
-} from "@tanstack/react-table"
-import { useMemo, useState } from "react"
+import { STATUS_FILTER_ITEMS } from "@/constants/clients"
+import { useTable } from "@/hooks/useTable"
+import { isPagination } from "@/utils/actions"
+import { type ColumnDef, flexRender } from "@tanstack/react-table"
+import { useMemo } from "react"
 import ClientsTableToolBar from "../ClientsTableToolBar"
 
 type PropsType<TData, TValue> = {
@@ -28,30 +22,10 @@ type PropsType<TData, TValue> = {
 }
 
 const ClientsTable = <TData, TValue>({ columns, data }: PropsType<TData, TValue>) => {
-  const [filtering, setFiltering] = useState("")
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([
-    {
-      id: "0",
-      value: "すべて",
-    },
-  ])
-
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onGlobalFilterChange: setFiltering,
-    onColumnFiltersChange: setColumnFilters,
-    state: {
-      columnFilters,
-      globalFilter: filtering,
-    },
-  })
+  const { table, setFiltering, filtering } = useTable({ columns, data })
 
   /**
-   * サジェストリストを取得
+   * サジェストリストを作成
    */
   const suggests = useMemo(() => {
     const rows = table.getFilteredRowModel().rows
@@ -68,18 +42,14 @@ const ClientsTable = <TData, TValue>({ columns, data }: PropsType<TData, TValue>
           )}`,
         })
       })
-
     return sortedUniqueValues
   }, [table])
-
-  const isPagination =
-    table.getFilteredRowModel().rows.length > table.getState().pagination.pageSize
 
   return (
     <>
       <ClientsTableToolBar
         table={table}
-        selectFilterItems={statusFilterItems}
+        selectFilterItems={STATUS_FILTER_ITEMS}
         combobox={
           <div className="w-1/3 min-w-[400px]">
             <CustomCombobox
@@ -93,7 +63,7 @@ const ClientsTable = <TData, TValue>({ columns, data }: PropsType<TData, TValue>
         }
       />
       <div className="overflow-x-auto">
-        <Table className={`grid`}>
+        <Table className="grid">
           <TableHeader className="bg-gray-50 grid">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id} className="flex w-full">
@@ -144,7 +114,7 @@ const ClientsTable = <TData, TValue>({ columns, data }: PropsType<TData, TValue>
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="text-center text-red-500 py-8 font-notoSansJp text-sm"
+                  className="text-center text-red-500 py-8 font-notoSansJp text-sm flex justify-center items-center"
                 >
                   ※検索結果に該当する顧問先情報が見つかりませんでした
                 </TableCell>
@@ -153,7 +123,7 @@ const ClientsTable = <TData, TValue>({ columns, data }: PropsType<TData, TValue>
           </TableBody>
         </Table>
       </div>
-      {isPagination && <DataTablePagination table={table} />}
+      {isPagination(table) && <DataTablePagination table={table} />}
     </>
   )
 }

@@ -42,7 +42,7 @@ export const STATUS_IS_ACTIVE = [
   },
   {
     id: "8",
-    label: "承認待ち",
+    label: "招待済み",
   },
   {
     id: "9",

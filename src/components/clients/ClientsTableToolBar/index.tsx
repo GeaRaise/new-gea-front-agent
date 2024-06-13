@@ -64,7 +64,7 @@ const ClientsTableToolBar = <TData,>({ table, selectFilterItems, combobox }: Pro
               <SelectValue placeholder={table.getState().pagination.pageSize} />
             </SelectTrigger>
             <SelectContent side="bottom">
-              {[10, 20, 30, 40, 50, 60].map((pageSize) => (
+              {[10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map((pageSize) => (
                 <SelectItem
                   className="text-geatextgray cursor-pointer"
                   key={pageSize}
