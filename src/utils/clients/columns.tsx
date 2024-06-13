@@ -1,15 +1,10 @@
 "use client"
 
-import { getStatusLabel } from "@/components/clients/ClientsTable/action"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import type { ClientType } from "@/types/clients"
 import type { ColumnDef, RowData } from "@tanstack/react-table"
 import { Ellipsis } from "lucide-react"
-
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-
-// const columnHelper = createColumnHelper<AgentUserType>()
+import { getIsActiveStatusLabel } from "../actions"
 
 declare module "@tanstack/react-table" {
   interface ColumnMeta<TData extends RowData, TValue> {
@@ -73,7 +68,7 @@ export const columns: ColumnDef<ClientType>[] = [
     enableResizing: false,
     enableGlobalFilter: false,
     cell: (info) => {
-      return getStatusLabel(info.getValue() as string)
+      return getIsActiveStatusLabel(info.getValue() as string)
     },
     meta: {
       width: "5%",

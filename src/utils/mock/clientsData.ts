@@ -6,7 +6,7 @@ function randomDate(start: Date, end: Date) {
 }
 
 // ランダムな1~9の数値を生成
-function randomNum(max = 9) {
+function randomNum(max = 10) {
   return (Math.floor(Math.random() * max) + 1).toString()
 }
 // ランダムな0~5の数値を生成

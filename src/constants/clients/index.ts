@@ -19,7 +19,7 @@ export const statusFilterItems: { value: string; label: string }[] = [
     label: "招待済み",
   },
   {
-    value: "9",
+    value: "10",
     label: "代理登録",
   },
 ]
