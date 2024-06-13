@@ -72,6 +72,9 @@ const ClientsTable = <TData, TValue>({ columns, data }: PropsType<TData, TValue>
     return sortedUniqueValues
   }, [table])
 
+  const isPagination =
+    table.getFilteredRowModel().rows.length > table.getState().pagination.pageSize
+
   return (
     <>
       <ClientsTableToolBar
@@ -140,7 +143,7 @@ const ClientsTable = <TData, TValue>({ columns, data }: PropsType<TData, TValue>
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination table={table} />
+      {isPagination && <DataTablePagination table={table} />}
     </>
   )
 }

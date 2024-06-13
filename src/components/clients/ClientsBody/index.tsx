@@ -11,6 +11,8 @@ import ClientsTable from "../ClientsTable"
 const ClientsBody: FC = async () => {
   // 顧問先一覧を取得
   const clients = await get<ClientType>("users")
+  // mockデータを使用
+  // const clients = data
 
   return (
     <>
