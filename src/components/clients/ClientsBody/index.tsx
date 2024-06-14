@@ -1,5 +1,6 @@
+import { get } from "@/lib/clients"
+import type { ClientType } from "@/types/clients"
 import { columns } from "@/utils/clients/columns"
-import { data } from "@/utils/mock/clientsData"
 import type { FC } from "react"
 import ClientsAction from "../ClientsAction"
 import ClientsTable from "../ClientsTable"
@@ -9,9 +10,9 @@ import ClientsTable from "../ClientsTable"
  */
 const ClientsBody: FC = async () => {
   // 顧問先一覧を取得
-  // const clients = await get<ClientType>("users")
+  const clients = await get<ClientType>("users")
   // mockデータを使用
-  const clients = data()
+  // const clients = data()
 
   return (
     <>

@@ -1,4 +1,5 @@
 "use client"
+import { DataTablePagination } from "@/components/elements/DataTablePagination"
 import { CustomCombobox } from "@/components/layouts/components"
 import {
   Table,
@@ -14,7 +15,6 @@ import { isPagination } from "@/utils/actions"
 import { type ColumnDef, flexRender } from "@tanstack/react-table"
 import { useMemo } from "react"
 import ClientsTableToolBar from "../ClientsTableToolBar"
-import { DataTablePagination } from "@/components/elements/DataTablePagination"
 
 type PropsType<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[]
