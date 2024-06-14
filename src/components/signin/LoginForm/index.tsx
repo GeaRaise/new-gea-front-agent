@@ -2,12 +2,13 @@
 
 import { SubmitButton } from "@/components/elements"
 import { Input } from "@/components/ui/input"
-import { handleLogin } from "@/utils/signin/actions"
+import { handleLoginDemo } from "@/utils/signin/actions"
 import { useForm } from "@conform-to/react"
 import { useFormState } from "react-dom"
 
 export const LoginForm = () => {
-  const [lastResult, action] = useFormState(handleLogin, undefined)
+  const [lastResult, action] = useFormState(handleLoginDemo, undefined)
+  // const [lastResult, action] = useFormState(handleLogin, undefined)
   const [form, fields] = useForm({
     // 前回の送信結果を同期
     lastResult,

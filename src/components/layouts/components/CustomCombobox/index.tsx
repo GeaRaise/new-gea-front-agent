@@ -8,6 +8,7 @@ import {
   CommandList,
 } from "@/components/ui/command"
 import type { Table } from "@tanstack/react-table"
+import { useRouter } from "next/navigation"
 import { type Dispatch, type SetStateAction, useCallback, useEffect, useRef, useState } from "react"
 
 type PropsType<TData> = {
@@ -24,6 +25,8 @@ const CustomCombobox = <TData,>({
   placeholder,
   suggests,
 }: PropsType<TData>) => {
+  const router = useRouter()
+
   const [iputValue, setInputValue] = useState<string>(filtering)
 
   const [isSuggest, setIsSuggest] = useState(false)
@@ -42,10 +45,6 @@ const CustomCombobox = <TData,>({
 
     if (value === "") {
       setIsSuggest(false)
-      return
-    }
-
-    if (table.getColumn("id")?.getFilterValue() || value === "") {
       table.getColumn("id")?.setFilterValue("")
       return
     }
@@ -56,6 +55,7 @@ const CustomCombobox = <TData,>({
       setIsSuggest(true)
     }
   }
+
   const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
     const input = inputRef.current
     if (input) {
@@ -92,16 +92,10 @@ const CustomCombobox = <TData,>({
                   className="cursor-pointer rounded-3xl"
                   key={suggest.key}
                   onSelect={() => {
-                    setFiltering("")
-                    setInputValue(suggest.value.toString())
-                    table.getColumn("id")?.setFilterValue(suggest.key.toString())
+                    router.push(`/clients/${suggest.key}`)
                   }}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      setFiltering("")
-                      setInputValue(suggest.value.toString())
-                      table.getColumn("id")?.setFilterValue(suggest.key.toString())
-                    }
+                  onKeyDown={() => {
+                    router.push(`/clients/${suggest.key}`)
                   }}
                 >
                   「{suggest.value}」表示

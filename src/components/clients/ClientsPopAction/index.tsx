@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { getActions } from "@/utils/clients/actions"
 import { MoreHorizontal } from "lucide-react"
+import Link from "next/link"
 
 /**
  *
@@ -16,7 +17,25 @@ import { MoreHorizontal } from "lucide-react"
 const ClientsPopAction = ({
   statusId,
   isLack = false,
-}: { statusId: string | undefined; isLack?: boolean }) => {
+  userId,
+}: { statusId: string | undefined; isLack?: boolean; userId: number }) => {
+  const actionItem = (label: string) => {
+    switch (label) {
+      case "詳細":
+        return (
+          <Link href={`/clients/${userId}`} as="/clients/1" className="block w-full">
+            {label}
+          </Link>
+        )
+      default:
+        return (
+          <button className="w-full text-left" onClick={() => console.log(`${label}モーダル表示`)}>
+            {label}
+          </button>
+        )
+    }
+  }
+
   return (
     <>
       <DropdownMenu>
@@ -31,9 +50,8 @@ const ClientsPopAction = ({
                   ? "text-primary focus:text-red-600"
                   : "text-geatextgray focus:text-geatext"
               }`}
-              onClick={action.onClick}
             >
-              {action.label}
+              {actionItem(action.label)}
             </DropdownMenuItem>
           ))}
         </DropdownMenuContent>

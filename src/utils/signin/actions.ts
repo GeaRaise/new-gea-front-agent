@@ -9,6 +9,11 @@ import { loginSchema } from "./schema"
 /**
  * ログイン処理
  */
+export const handleLoginDemo = async (_prevState: unknown, formData: FormData) => {
+  cookies().set("gea_demo_token", "testdemotoken")
+  // ログイン処理
+  redirect("/clients")
+}
 export const handleLogin = async (_prevState: unknown, formData: FormData) => {
   const submission = parseWithZod(formData, {
     schema: loginSchema,

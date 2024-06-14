@@ -1,6 +1,6 @@
 import HeaderAvatar from "./HeaderAvator"
 import HeaderNotification from "./HeaderNotification"
-import NavLinkButton from "./LinkButton"
+import ActiveLink from "./ActiveLink"
 import Logo from "./Logo"
 import Spinner from "./Spinner"
 import SubmitButton from "./SubmitButton"
@@ -8,9 +8,9 @@ import SubmitButton from "./SubmitButton"
 export {
   HeaderAvatar,
   HeaderNotification,
-  NavLinkButton as LinkButton,
+  ActiveLink as LinkButton,
   Logo,
-  NavLinkButton,
+  ActiveLink as NavLinkButton,
   Spinner,
   SubmitButton,
 }

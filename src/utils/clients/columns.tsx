@@ -52,6 +52,9 @@ export const columns: ColumnDef<ClientType>[] = [
     header: () => {
       return <div>登録メールアドレス</div>
     },
+    cell: (info) => {
+      return info.getValue() === undefined ? "-" : info.getValue()
+    },
     meta: {
       width: "28%",
       minWidth: "215px",
@@ -92,7 +95,7 @@ export const columns: ColumnDef<ClientType>[] = [
         user.profile.last_name === undefined ||
         user.email === undefined
 
-      return <ClientsPopAction statusId={user.is_active} isLack={isLack} />
+      return <ClientsPopAction statusId={user.is_active} isLack={isLack} userId={user.id} />
     },
   },
 ]

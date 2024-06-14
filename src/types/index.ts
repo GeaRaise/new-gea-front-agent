@@ -7,7 +7,7 @@ export type UserType = {
   /** ユーザー名 */
   username: string
   /** メールアドレス */
-  email: string
+  email: string | undefined
   /** 承認状況 */
   is_active?: string
   /** ユーザー種別 */
