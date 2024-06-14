@@ -1,5 +1,5 @@
 import { HeaderAvatar, HeaderNotification, Logo, SubmitButton } from "@/components/elements"
-import { handleLogout } from "@/utils/signin/actions"
+import { handleLogout } from "@/utils/serveractions"
 import Link from "next/link"
 
 import type { FC } from "react"

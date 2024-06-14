@@ -1,10 +1,10 @@
+import { getActions } from "@/components/clients/actions"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { getActions } from "@/utils/clients/actions"
 import { MoreHorizontal } from "lucide-react"
 import Link from "next/link"
 

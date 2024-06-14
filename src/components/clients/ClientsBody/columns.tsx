@@ -1,8 +1,8 @@
 "use client"
 import ClientsPopAction from "@/components/clients/ClientsPopAction"
 import type { ClientType } from "@/types/clients"
+import { getIsActiveStatusLabel } from "@/utils/actions"
 import type { ColumnDef, RowData } from "@tanstack/react-table"
-import { getIsActiveStatusLabel } from "../actions"
 
 declare module "@tanstack/react-table" {
   interface ColumnMeta<TData extends RowData, TValue> {

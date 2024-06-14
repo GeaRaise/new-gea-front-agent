@@ -68,7 +68,7 @@ export const STATUS_ACTIONS = [
   },
 ]
 /**
- *
+ * ステータスによるアクションを取得
  * @param statusId is_activeのステータスID
  * @param isLack 招待情報が不足しているかどうか true:不足している false:不足していない
  * @returns ステータスアクションリスト

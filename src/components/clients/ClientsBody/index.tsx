@@ -1,9 +1,9 @@
 import { get } from "@/lib/clients"
 import type { ClientType } from "@/types/clients"
-import { columns } from "@/utils/clients/columns"
 import type { FC } from "react"
 import ClientsAction from "../ClientsAction"
 import ClientsTable from "../ClientsTable"
+import { columns } from "./columns"
 
 /**
  * 顧問先管理：ボディコンポーネント

@@ -1,19 +1,17 @@
 "use server"
 
 import { BACKEND_URL } from "@/constants"
+import { loginSchema } from "@/types/signin/schema"
 import { parseWithZod } from "@conform-to/zod"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import { loginSchema } from "./schema"
 
 /**
  * ログイン処理
+ * @param _prevState 前回の状態
+ * @param formData フォームデータ
+ * @returns ログイン結果
  */
-export const handleLoginDemo = async (_prevState: unknown, formData: FormData) => {
-  cookies().set("gea_demo_token", "testdemotoken")
-  // ログイン処理
-  redirect("/clients")
-}
 export const handleLogin = async (_prevState: unknown, formData: FormData) => {
   const submission = parseWithZod(formData, {
     schema: loginSchema,
@@ -77,26 +75,4 @@ export const handleLogin = async (_prevState: unknown, formData: FormData) => {
     redirect("/clients")
   })
   return result
-}
-
-/**
- * ログアウト処理
- */
-export const handleLogout = async () => {
-  await fetch(`${BACKEND_URL}/api/common/logout`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  }).then((res) => {
-    if (res.status === 200) {
-      cookies().delete("gea_demo_token")
-      cookies().delete("gea_demo_refresh_token")
-      cookies().delete("gea_prod_token")
-      cookies().delete("gea_dev_token")
-      redirect("/signin")
-    } else {
-      console.info("ログアウトできませんでした")
-    }
-  })
 }
