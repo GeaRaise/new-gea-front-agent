@@ -7,7 +7,7 @@ import type { FC } from "react"
 export const Header: FC = () => {
   return (
     <div className="fixed left-0 top-0 flex h-16 w-screen items-center justify-between px-8 bg-white">
-      <Link href="/companies">
+      <Link href="/clients">
         <Logo />
       </Link>
       <div className="flex items-center justify-center gap-5">
