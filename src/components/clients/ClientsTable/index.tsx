@@ -95,7 +95,7 @@ const ClientsTable = <TData, TValue>({ columns, data }: PropsType<TData, TValue>
                       return (
                         <TableCell
                           key={cell.id}
-                          className={`flex text-geatext items-center`}
+                          className={`flex items-center`}
                           style={{
                             minWidth: cell.column.columnDef.meta?.minWidth,
                             flexBasis: cell.column.columnDef.meta?.width,

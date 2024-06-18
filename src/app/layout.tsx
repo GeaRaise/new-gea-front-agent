@@ -26,7 +26,7 @@ export const RootLayout = ({
 
   return (
     <html lang="ja">
-      <body className={`${notoSansJp.variable} ${inter.className} font-notoSansJp`}>
+      <body className={`${notoSansJp.variable} ${inter.className} font-notoSansJp text-geatext`}>
         <AuthedCheck isLogined={cookie !== undefined}>
           <main>{children}</main>
         </AuthedCheck>

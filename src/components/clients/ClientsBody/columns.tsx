@@ -12,7 +12,7 @@ declare module "@tanstack/react-table" {
 }
 export const columns: ColumnDef<ClientType>[] = [
   {
-    accessorKey: "id",
+    accessorFn: (info) => info.user.id,
     id: "id",
     header: () => {
       return <div>顧問先No.</div>
