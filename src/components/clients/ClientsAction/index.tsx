@@ -1,3 +1,4 @@
+import ActiveLink from "@/components/elements/ActiveLink"
 import { ImportIcon } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { PlusCircle } from "lucide-react"
@@ -22,8 +23,8 @@ const ClientsAction: FC = () => {
         <PlusCircle className="text-[#A8A8A8]" size={20} />
         <span className="text-[#A8A8A8]">新規招待</span>
       </Button>
-      <Button size="sm" className="bg-secondary text-white">
-        代理登録
+      <Button size="sm" className="bg-secondary text-white" asChild={true}>
+        <ActiveLink href="/clients/proxy">代理登録</ActiveLink>
       </Button>
     </div>
   )

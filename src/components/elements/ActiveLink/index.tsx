@@ -12,7 +12,7 @@ type PropsType = ComponentProps<typeof Link> & {
 const ActiveLink: FC<PropsType> = (props) => {
   const { children, href, activeClassName = "text-primary font-bold" } = props
   const pathName = usePathname()
-  const isActive = pathName === `/${href}`
+  const isActive = pathName.includes(`${href}`)
 
   return (
     <Link

@@ -1,13 +1,14 @@
 "use client"
 import { getActions } from "@/components/clients/actions"
-import { Button } from "@/components/ui/button"
-import { CustomDialogContent, Dialog, DialogTrigger } from "@/components/ui/dialog"
+import { GenericDialogContent } from "@/components/layouts/components"
+import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { cn } from "@/lib/utils"
 import { MoreHorizontal } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
@@ -40,7 +41,17 @@ const ClientsPopAction = ({
     switch (label) {
       case "詳細":
         return (
-          <Link href={`/clients/${userId}`} as="/clients/1" className="block w-full">
+          <Link href={`/clients/${userId}`} as={`/clients/${userId}`} className="block w-full">
+            {label}
+          </Link>
+        )
+      case "代理登録":
+        return (
+          <Link
+            href={`/clients/proxy/${userId}`}
+            as={`/clients/proxy/${userId}`}
+            className="block w-full"
+          >
             {label}
           </Link>
         )
@@ -60,11 +71,10 @@ const ClientsPopAction = ({
             {getActions({ statusId, isLack }).map((action) => (
               <DialogTrigger asChild={true}>
                 <DropdownMenuItem
-                  className={`transition-all ${
-                    action.label === "削除"
-                      ? "text-primary focus:text-red-600"
-                      : "text-geatextgray focus:text-geatext"
-                  }`}
+                  className={cn(
+                    "transition-all text-geatextgray focus:text-geatext",
+                    action.label === "削除" && "text-primary focus:text-red-600",
+                  )}
                   onClick={() => {
                     handleClick(action.label)
                   }}
@@ -75,28 +85,7 @@ const ClientsPopAction = ({
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-        <CustomDialogContent
-          dialogTitle={
-            mode === "invite"
-              ? "顧問先を招待してもよろしいでしょうか？"
-              : "顧問先データを削除してもよろしいでしょうか？"
-          }
-        >
-          {mode === "invite" ? (
-            <p className="text-center">招待完了後、該当顧問先へ会員登録の招待メールが届きます。</p>
-          ) : (
-            <p className="text-center">
-              顧問先データを削除すると各データ閲覧ができなくなり、インセンティブ対象から外れます。
-              <br />
-              また、会員登録前の顧問先ユーザーの場合は招待リンクが無効となります。
-            </p>
-          )}
-          <div className="mt-5 lg:mt-10">
-            <Button variant={"secondary"} size={"lg"} className="text-white">
-              {mode === "invite" ? "顧問先を招待する" : "顧問先データを削除する"}
-            </Button>
-          </div>
-        </CustomDialogContent>
+        <GenericDialogContent mode={mode} />
       </Dialog>
     </>
   )

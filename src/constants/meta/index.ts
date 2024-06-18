@@ -25,4 +25,9 @@ export const LOGIN_TITLE = `ログイン${BASE_TITLE}`
 /**
  * 顧問先管理 Title
  */
-export const COMPANIES_TITLE = `顧問先管理${BASE_TITLE}`
+export const CLIENTS_TITLE = `顧問先管理${BASE_TITLE}`
+
+/**
+ * 顧問先代理登録 Title
+ */
+export const PROXY_TITLE = `顧問先代理登録${BASE_TITLE}`

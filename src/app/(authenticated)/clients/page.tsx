@@ -1,9 +1,9 @@
 import { CompaniesBody } from "@/components/clients"
-import { COMPANIES_TITLE } from "@/constants/meta"
+import { CLIENTS_TITLE } from "@/constants/meta"
 import type { Metadata, NextPage } from "next"
 
 export const metadata: Metadata = {
-  title: COMPANIES_TITLE,
+  title: CLIENTS_TITLE,
 }
 /**
  * 顧問先管理ページ

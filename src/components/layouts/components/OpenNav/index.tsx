@@ -6,8 +6,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import type { FC } from "react"
 
-const OpenNav = () => {
+const OpenNav: FC = () => {
   return (
     <Accordion type="multiple" defaultValue={["item-1", "item-2"]}>
       <AccordionItem value="item-1">
@@ -18,13 +19,13 @@ const OpenNav = () => {
           </div>
         </AccordionTrigger>
         <AccordionContent>
-          <NavLinkButton href="clients">顧問先管理</NavLinkButton>
+          <NavLinkButton href="/clients">顧問先管理</NavLinkButton>
         </AccordionContent>
         <AccordionContent>
-          <NavLinkButton href="usersmanagement">所内担当者管理</NavLinkButton>
+          <NavLinkButton href="/usersmanagement">所内担当者管理</NavLinkButton>
         </AccordionContent>
         <AccordionContent>
-          <NavLinkButton href="relations">顧問先の所内担当者設定</NavLinkButton>
+          <NavLinkButton href="/relations">顧問先の所内担当者設定</NavLinkButton>
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-2">
