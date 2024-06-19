@@ -1,10 +1,11 @@
 import { CustomDialogContent, Dialog, DialogTrigger } from "@/components/ui/dialog"
-import type { FC, ReactNode } from "react"
+import type { ComponentProps, FC, ReactNode } from "react"
 
-type PropsType = {
+type PropsType = ComponentProps<typeof Dialog> & {
   children: ReactNode
-  dialogTrigger: ReactNode
+  dialogTrigger?: ReactNode
   dialogTItle?: string
+  defaultOpen?: boolean
 }
 
 /**
@@ -12,14 +13,19 @@ type PropsType = {
  * @param children ボディ部分
  * @param triggerName トリガーボタンの名前
  * @param dialogTItle ダイアログのタイトル
+ * @param defaultOpen ダイアログを開いた状態にするか
  * @returns
  */
 
 const BaseDialog: FC<PropsType> = (props) => {
-  const { children, dialogTItle = "ダイアログタイトル", dialogTrigger } = props
+  const { children, dialogTItle = "", dialogTrigger, defaultOpen = false } = props
   return (
-    <Dialog>
-      <DialogTrigger asChild={true}>{dialogTrigger}</DialogTrigger>
+    <Dialog defaultOpen={defaultOpen} {...props}>
+      {dialogTrigger ? (
+        <DialogTrigger asChild={true}>{dialogTrigger}</DialogTrigger>
+      ) : (
+        <DialogTrigger asChild={true}></DialogTrigger>
+      )}
       <CustomDialogContent dialogTitle={dialogTItle}>{children}</CustomDialogContent>
     </Dialog>
   )

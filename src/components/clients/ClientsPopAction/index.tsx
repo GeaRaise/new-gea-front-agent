@@ -69,7 +69,7 @@ const ClientsPopAction = ({
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             {getActions({ statusId, isLack }).map((action) => (
-              <DialogTrigger asChild={true}>
+              <DialogTrigger asChild={true} key={action.id}>
                 <DropdownMenuItem
                   className={cn(
                     "transition-all text-geatextgray focus:text-geatext",
