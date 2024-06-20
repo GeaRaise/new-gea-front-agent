@@ -1,9 +1,8 @@
 "use client"
-import { BaseDialog } from "@/components/layouts/components"
-import { Button } from "@/components/ui/button"
+import { SubmitButton } from "@/components/elements"
 import { Input } from "@/components/ui/input"
 import { PlusCircle } from "lucide-react"
-import { type Dispatch, type SetStateAction, useState } from "react"
+import { type Dispatch, type SetStateAction, useEffect, useState } from "react"
 import { useFormState } from "react-dom"
 import * as R from "remeda"
 import { cilentsInvite } from "./serveractions"
@@ -19,9 +18,16 @@ type ItemType = {
   }
 }
 
-const ClientsInviteForm = ({ setOpen }: { setOpen: Dispatch<SetStateAction<boolean>> }) => {
-  const [lastResult, action] = useFormState(cilentsInvite, undefined)
-  const [completedOpen, setCompletedOpen] = useState(false)
+const ClientsInviteForm = ({
+  setOpen,
+  setCompletedOpen,
+  setErrorOpen,
+}: {
+  setOpen: Dispatch<SetStateAction<boolean>>
+  setCompletedOpen: Dispatch<SetStateAction<boolean>>
+  setErrorOpen: Dispatch<SetStateAction<boolean>>
+}) => {
+  const [formState, action] = useFormState(cilentsInvite, { success: false, message: "" })
   const [items, setItems] = useState<ItemType[]>([
     {
       id: 0,
@@ -34,6 +40,18 @@ const ClientsInviteForm = ({ setOpen }: { setOpen: Dispatch<SetStateAction<boole
       },
     },
   ])
+
+  useEffect(() => {
+    console.log("formState", formState)
+
+    if (formState.success) {
+      setOpen(false)
+      setCompletedOpen(true)
+    } else if (!formState.success && formState.message !== "") {
+      setOpen(false)
+      setErrorOpen(true)
+    }
+  }, [formState])
 
   /**
    * メールアドレス形式チェック
@@ -112,14 +130,7 @@ const ClientsInviteForm = ({ setOpen }: { setOpen: Dispatch<SetStateAction<boole
     <>
       <form
         key="cleintsInviteForm"
-        action={() => {
-          try {
-            action
-          } catch (e) {
-            console.error(e)
-          }
-          setCompletedOpen(true)
-        }}
+        action={action}
         noValidate={true}
         className="mt-5 lg:mt-10 w-[85%]"
       >
@@ -220,27 +231,16 @@ const ClientsInviteForm = ({ setOpen }: { setOpen: Dispatch<SetStateAction<boole
           </button>
         </div>
         <div className="text-center mt-10">
-          <Button
+          <SubmitButton
             type="submit"
             className="rounded-none disabled:text-white disabled:bg-[#979797] text-white"
             variant={"secondary"}
             disabled={isDisabled()}
           >
             顧問先を招待する
-          </Button>
+          </SubmitButton>
         </div>
       </form>
-      <BaseDialog
-        dialogTItle="顧問先の招待が完了しました"
-        open={completedOpen}
-        onOpenChange={setCompletedOpen}
-      >
-        <p className="text-center text-xs">
-          該当顧問先へ会員登録の招待メールが届きました。
-          <br />
-          ※「迷惑メールフォルダ」へ自動振分されてしまう可能性もあります。ご注意ください
-        </p>
-      </BaseDialog>
     </>
   )
 }

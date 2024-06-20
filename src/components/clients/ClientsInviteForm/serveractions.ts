@@ -1,7 +1,20 @@
 "use server"
 
 // action.ts
-
-export const cilentsInvite = async (prevState: unknown, formData: FormData) => {
-  console.log("フォームが送信されました")
+type State = {
+  success?: boolean
+  message?: string
+}
+export const cilentsInvite = async (prevState: State, formData: FormData) => {
+  try {
+    return {
+      success: true,
+      message: "顧問先の招待が完了しました",
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: "顧問先の招待に失敗しました",
+    }
+  }
 }

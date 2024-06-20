@@ -14,7 +14,7 @@ export const Header: FC = () => {
         <HeaderNotification />
         <HeaderAvatar />
         <form action={handleLogout} className="flex w-full justify-center">
-          <SubmitButton label="ログアウト" className="bg-secondary shadow-md min-w-32" />
+          <SubmitButton className="bg-secondary shadow-md min-w-32">ログアウト</SubmitButton>
         </form>
       </div>
     </div>

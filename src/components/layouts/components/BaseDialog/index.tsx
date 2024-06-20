@@ -4,7 +4,7 @@ import type { ComponentProps, FC, ReactNode } from "react"
 type PropsType = ComponentProps<typeof Dialog> & {
   children: ReactNode
   dialogTrigger?: ReactNode
-  dialogTItle?: string
+  dialogTitle?: string
   defaultOpen?: boolean
 }
 
@@ -12,13 +12,13 @@ type PropsType = ComponentProps<typeof Dialog> & {
  * ダイアログのベースコンポーネント：タイトルと「前の画面に戻る」はデフォルトで表示
  * @param children ボディ部分
  * @param triggerName トリガーボタンの名前
- * @param dialogTItle ダイアログのタイトル
+ * @param dialogTitle ダイアログのタイトル
  * @param defaultOpen ダイアログを開いた状態にするか
  * @returns
  */
 
 const BaseDialog: FC<PropsType> = (props) => {
-  const { children, dialogTItle = "", dialogTrigger, defaultOpen = false } = props
+  const { children, dialogTitle = "", dialogTrigger, defaultOpen = false } = props
   return (
     <Dialog defaultOpen={defaultOpen} {...props}>
       {dialogTrigger ? (
@@ -26,7 +26,7 @@ const BaseDialog: FC<PropsType> = (props) => {
       ) : (
         <DialogTrigger asChild={true}></DialogTrigger>
       )}
-      <CustomDialogContent dialogTitle={dialogTItle}>{children}</CustomDialogContent>
+      <CustomDialogContent dialogTitle={dialogTitle}>{children}</CustomDialogContent>
     </Dialog>
   )
 }

@@ -1,6 +1,6 @@
 "use client"
 import { getActions } from "@/components/clients/actions"
-import { GenericDialogContent } from "@/components/layouts/components"
+import ConfilmDialogContent from "@/components/layouts/components/ConfilmDialogContent"
 import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 import {
   DropdownMenu,
@@ -85,7 +85,7 @@ const ClientsPopAction = ({
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-        <GenericDialogContent mode={mode} />
+        <ConfilmDialogContent mode={mode} />
       </Dialog>
     </>
   )
