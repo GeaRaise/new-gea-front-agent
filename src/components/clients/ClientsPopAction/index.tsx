@@ -1,6 +1,6 @@
 "use client"
 import { getActions } from "@/components/clients/actions"
-import { GenericDialogContent } from "@/components/layouts/components"
+import ConfilmDialogContent from "@/components/layouts/components/ConfilmDialogContent"
 import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 import {
   DropdownMenu,
@@ -69,7 +69,7 @@ const ClientsPopAction = ({
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             {getActions({ statusId, isLack }).map((action) => (
-              <DialogTrigger asChild={true}>
+              <DialogTrigger asChild={true} key={action.id}>
                 <DropdownMenuItem
                   className={cn(
                     "transition-all text-geatextgray focus:text-geatext",
@@ -85,7 +85,7 @@ const ClientsPopAction = ({
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-        <GenericDialogContent mode={mode} />
+        <ConfilmDialogContent mode={mode} />
       </Dialog>
     </>
   )

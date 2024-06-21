@@ -47,7 +47,7 @@ export const LoginForm = () => {
             name={fields.password.name}
           />
         </div>
-        <SubmitButton label="ログイン" className="shadow-md min-w-32" />
+        <SubmitButton className="shadow-md min-w-32">ログイン</SubmitButton>
         <div>
           <p className="text-red-500">{fields.email.errors}</p>
           <p className="text-red-500">{fields.password.errors}</p>

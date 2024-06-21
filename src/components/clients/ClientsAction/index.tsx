@@ -1,8 +1,8 @@
 import ActiveLink from "@/components/elements/ActiveLink"
 import { ImportIcon } from "@/components/icons"
 import { Button } from "@/components/ui/button"
-import { PlusCircle } from "lucide-react"
 import type { FC } from "react"
+import ClientsInviteDialog from "../ClientsInviteDialog"
 
 const ClientsAction: FC = () => {
   return (
@@ -15,14 +15,7 @@ const ClientsAction: FC = () => {
         <ImportIcon />
         <span className="text-[#A8A8A8]">一括インポート</span>
       </Button>
-      <Button
-        variant="outline"
-        size={"sm"}
-        className="border-[#A8A8A8] flex gap-2 hover:bg-[#A8A8A8]/10"
-      >
-        <PlusCircle className="text-[#A8A8A8]" size={20} />
-        <span className="text-[#A8A8A8]">新規招待</span>
-      </Button>
+      <ClientsInviteDialog />
       <Button size="sm" className="bg-secondary text-white" asChild={true}>
         <ActiveLink href="/clients/proxy">代理登録</ActiveLink>
       </Button>

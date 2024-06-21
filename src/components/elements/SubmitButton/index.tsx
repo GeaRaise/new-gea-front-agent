@@ -1,21 +1,30 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import type { ButtonHTMLAttributes, FC, ReactNode } from "react"
+import { cn } from "@/lib/utils"
+import type { ComponentProps, ReactNode } from "react"
 import { useFormStatus } from "react-dom"
 import Spinner from "../Spinner"
 
-interface PropsType extends ButtonHTMLAttributes<HTMLButtonElement> {
-  label?: string
+type PropsType = ComponentProps<typeof Button> & {
+  children: ReactNode
   suspenseLabel?: string | ReactNode
 }
 
-const SubmitButton: FC<PropsType> = ({
-  label = "送信する",
-  suspenseLabel = <Spinner />,
-  ...props
-}) => {
+const SubmitButton = (props: PropsType) => {
+  const { children, className, suspenseLabel = <Spinner /> } = props
+
   const { pending } = useFormStatus()
-  return <Button {...props}>{pending ? suspenseLabel : label}</Button>
+  return (
+    <div>
+      {pending ? (
+        <div className="flex justify-center items-center">{suspenseLabel}</div>
+      ) : (
+        <Button className={cn("", className)} {...props}>
+          {children}
+        </Button>
+      )}
+    </div>
+  )
 }
 
 export default SubmitButton
