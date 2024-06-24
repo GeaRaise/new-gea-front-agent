@@ -33,7 +33,7 @@ const ClientsInviteForm = (props: PropsType) => {
     }
   }, [formState])
 
-  const debouncer = R.debounce(handleChange, { waitMs: 600 })
+  const debouncer = R.debounce(handleChange, { waitMs: 400 })
 
   return (
     <>
