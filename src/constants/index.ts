@@ -53,3 +53,5 @@ export const STATUS_IS_ACTIVE = [
     label: "代理登録",
   },
 ]
+
+export const ERROR_DIAROG_TITLE = "エラーが発生しました。再度お試しください。"

@@ -1,9 +1,16 @@
 "use client"
 import { BaseDialog, CompleteDialog } from "@/components/layouts/components"
 import { Button } from "@/components/ui/button"
+import { ERROR_DIAROG_TITLE } from "@/constants"
 import { PlusCircle } from "lucide-react"
 import { type FC, useState } from "react"
 import ClientsInviteForm from "../ClientsInviteForm"
+import {
+  INVITE_COMPLEATE_DIAROG_DISPRICTION,
+  INVITE_COMPLEATE_DIAROG_TITLE,
+  INVITE_DIAROG_DISCRIPTION,
+  INVITE_DIAROG_TITLE,
+} from "./constants"
 
 const ClientsInviteDialog: FC = () => {
   const [open, setOpen] = useState(false)
@@ -14,7 +21,7 @@ const ClientsInviteDialog: FC = () => {
       <BaseDialog
         open={open}
         onOpenChange={setOpen}
-        dialogTitle="招待する顧問先情報を入力してください"
+        dialogTitle={INVITE_DIAROG_TITLE}
         dialogTrigger={
           <Button
             variant="outline"
@@ -26,11 +33,7 @@ const ClientsInviteDialog: FC = () => {
           </Button>
         }
       >
-        <p className="text-center text-sm">
-          招待完了後、該当顧問先へ会員登録の招待メールが届きます。
-          <br />
-          ※一括登録の場合、新規入力先全ての顧問先へ招待メールが送付されます
-        </p>
+        <p className="text-center text-sm whitespace-pre-wrap">{INVITE_DIAROG_DISCRIPTION}</p>
         <ClientsInviteForm
           setOpen={setOpen}
           setCompletedOpen={setCompletedOpen}
@@ -38,23 +41,13 @@ const ClientsInviteDialog: FC = () => {
         />
       </BaseDialog>
       <CompleteDialog
-        dialogTitle="顧問先の招待が完了しました"
+        dialogTitle={INVITE_COMPLEATE_DIAROG_TITLE}
         open={completedOpen}
         onOpenChange={setCompletedOpen}
       >
-        <div className="mb-10">
-          <p className="text-center text-xs">
-            該当顧問先へ会員登録の招待メールが届きました。
-            <br />
-            ※「迷惑メールフォルダ」へ自動振分されてしまう可能性もあります。ご注意ください
-          </p>
-        </div>
+        {INVITE_COMPLEATE_DIAROG_DISPRICTION}
       </CompleteDialog>
-      <BaseDialog
-        dialogTitle="エラーが発生しました。再度お試しください。"
-        open={errorOpen}
-        onOpenChange={setErrorOpen}
-      >
+      <BaseDialog dialogTitle={ERROR_DIAROG_TITLE} open={errorOpen} onOpenChange={setErrorOpen}>
         <div></div>
       </BaseDialog>
     </>
