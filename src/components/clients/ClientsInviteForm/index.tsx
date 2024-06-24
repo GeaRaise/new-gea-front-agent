@@ -1,49 +1,29 @@
 "use client"
 import { SubmitButton } from "@/components/elements"
 import { Input } from "@/components/ui/input"
+import { useFormItems } from "@/hooks/clients/useFormItems"
 import { PlusCircle } from "lucide-react"
-import { type Dispatch, type SetStateAction, useEffect, useState } from "react"
+import { type Dispatch, type SetStateAction, useEffect } from "react"
 import { useFormState } from "react-dom"
 import * as R from "remeda"
+import { isDisabled } from "./actions"
 import { cilentsInvite } from "./serveractions"
 
-type ItemType = {
-  id: number
-  companyName: string
-  first_name: string
-  last_name: string
-  email: string
-  errors: {
-    email: string
-  }
-}
-
-const ClientsInviteForm = ({
-  setOpen,
-  setCompletedOpen,
-  setErrorOpen,
-}: {
+type PropsType = {
   setOpen: Dispatch<SetStateAction<boolean>>
   setCompletedOpen: Dispatch<SetStateAction<boolean>>
   setErrorOpen: Dispatch<SetStateAction<boolean>>
-}) => {
+}
+
+const ClientsInviteForm = (props: PropsType) => {
+  const { setOpen, setCompletedOpen, setErrorOpen } = props
+  // useFormStateカスタムフックを使用して、フォームの状態を管理
   const [formState, action] = useFormState(cilentsInvite, { success: false, message: "" })
-  const [items, setItems] = useState<ItemType[]>([
-    {
-      id: 0,
-      companyName: "",
-      first_name: "",
-      last_name: "",
-      email: "",
-      errors: {
-        email: "",
-      },
-    },
-  ])
+  // useFormItemsカスタムフックを使用して、フォームの項目を管理
+  const { items, handleChange, addItem } = useFormItems()
 
+  // フォームの送信結果に応じてダイアログを表示
   useEffect(() => {
-    console.log("formState", formState)
-
     if (formState.success) {
       setOpen(false)
       setCompletedOpen(true)
@@ -52,77 +32,6 @@ const ClientsInviteForm = ({
       setErrorOpen(true)
     }
   }, [formState])
-
-  /**
-   * メールアドレス形式チェック
-   * @param email メールアドレス
-   * @returns {boolean} true: 正しい形式, false: 間違った形式
-   */
-  const checkEmail = (email: string) => {
-    const results = email.match(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/)
-    return results !== null
-  }
-
-  const handleChange = ({
-    index,
-    key,
-    value,
-  }: {
-    index: number
-    key: "companyName" | "first_name" | "last_name" | "email"
-    value: string
-  }) => {
-    const newItems = [...items]
-    newItems[index] = {
-      ...newItems[index],
-      [key]: value,
-    }
-    setItems(newItems)
-    // メールアドレスのバリデーション
-    if (key === "email" && value !== "") {
-      const results = checkEmail(value)
-      if (results) {
-        items[index].errors.email = ""
-      } else {
-        items[index].errors.email = "※メールアドレスの形式が異なっています"
-      }
-    } else {
-      items[index].errors.email = ""
-    }
-  }
-
-  /**
-   * 項目が全て入力されているかどうか
-   * @returns {boolean} true: 全て入力されている, false: 入力されていない
-   */
-  const isRowComplete = (item: ItemType) => {
-    return (
-      item.companyName !== "" &&
-      item.first_name !== "" &&
-      item.last_name !== "" &&
-      item.email !== ""
-    )
-  }
-
-  /**
-   * ボタンのdisabledを判定する
-   */
-  const isDisabled = () => {
-    // 1つ以上の行が全て入力されているかどうか
-    const someRowComplete = items.some(isRowComplete)
-    // 全ての行が全て入力されているかどうか
-    const allRowsCompleteOrEmpty = items.every(
-      (item) =>
-        isRowComplete(item) ||
-        (item.companyName === "" &&
-          item.first_name === "" &&
-          item.last_name === "" &&
-          item.email === ""),
-    )
-    // エラーがあるかどうか
-    const isError = items.some((item) => item.errors.email !== "")
-    return !(someRowComplete && allRowsCompleteOrEmpty && !isError)
-  }
 
   const debouncer = R.debounce(handleChange, { waitMs: 600 })
 
@@ -207,25 +116,7 @@ const ClientsInviteForm = ({
           )
         })}
         <div className="border-t-2 border-[#DEE2E6] pt-2">
-          <button
-            className="flex gap-2 p-0 items-center hover:bg-none"
-            onClick={(e) => {
-              e.preventDefault()
-              setItems([
-                ...items,
-                {
-                  id: items.length + 1,
-                  companyName: "",
-                  first_name: "",
-                  last_name: "",
-                  email: "",
-                  errors: {
-                    email: "",
-                  },
-                },
-              ])
-            }}
-          >
+          <button className="flex gap-2 p-0 items-center hover:bg-none" onClick={addItem}>
             <PlusCircle className="text-[#A8A8A8]" />
             <span className="text-[#A8A8A8]">招待先を追加</span>
           </button>
@@ -235,7 +126,7 @@ const ClientsInviteForm = ({
             type="submit"
             className="rounded-none disabled:text-white disabled:bg-[#979797] text-white"
             variant={"secondary"}
-            disabled={isDisabled()}
+            disabled={isDisabled(items)}
           >
             顧問先を招待する
           </SubmitButton>

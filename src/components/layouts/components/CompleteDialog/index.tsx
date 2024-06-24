@@ -11,7 +11,9 @@ const CompleteDialog = (props: PropsType) => {
   return (
     <Dialog {...props}>
       <CustomDialogContent dialogTitle={dialogTitle} className="lg:max-w-[640px]">
-        {children}
+        <div className="mb-10">
+          <p className="text-center text-xs whitespace-pre-wrap">{children}</p>
+        </div>
       </CustomDialogContent>
     </Dialog>
   )
