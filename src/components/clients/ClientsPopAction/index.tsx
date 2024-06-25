@@ -1,7 +1,7 @@
 "use client"
 import { getActions } from "@/components/clients/actions"
-import ConfilmDialogContent from "@/components/layouts/components/ConfilmDialogContent"
-import { Dialog, DialogTrigger } from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import { CustomDialogContent, Dialog, DialogTrigger } from "@/components/ui/dialog"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
+import { getDialogInfo } from "@/utils/actions"
 import { MoreHorizontal } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
@@ -59,7 +60,7 @@ const ClientsPopAction = ({
         return <button className="w-full text-left">{label}</button>
     }
   }
-
+  const dialogInfo = getDialogInfo(mode)
   return (
     <>
       <Dialog>
@@ -85,7 +86,14 @@ const ClientsPopAction = ({
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-        <ConfilmDialogContent mode={mode} />
+        <CustomDialogContent dialogTitle={dialogInfo.title} className="lg:max-w-[640px]">
+          <p className="text-sm text-center whitespace-pre-wrap">{dialogInfo.discription}</p>
+          <div className="mt-5 lg:mt-10">
+            <Button variant={"secondary"} size={"lg"} className="text-white">
+              {dialogInfo.buttonText}
+            </Button>
+          </div>
+        </CustomDialogContent>
       </Dialog>
     </>
   )

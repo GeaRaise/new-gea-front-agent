@@ -1,16 +1,16 @@
 "use client"
-import { BaseDialog, CompleteDialog } from "@/components/layouts/components"
+import { BaseDialog } from "@/components/layouts/components"
 import { Button } from "@/components/ui/button"
 import { ERROR_DIAROG_TITLE } from "@/constants"
-import { PlusCircle } from "lucide-react"
-import { type FC, useState } from "react"
-import ClientsInviteForm from "../ClientsInviteForm"
 import {
   INVITE_COMPLEATE_DIAROG_DISPRICTION,
   INVITE_COMPLEATE_DIAROG_TITLE,
   INVITE_DIAROG_DISCRIPTION,
   INVITE_DIAROG_TITLE,
-} from "./constants"
+} from "@/constants/dialog"
+import { PlusCircle } from "lucide-react"
+import { type FC, useState } from "react"
+import ClientsInviteForm from "../ClientsInviteForm"
 
 const ClientsInviteDialog: FC = () => {
   const [open, setOpen] = useState(false)
@@ -40,13 +40,18 @@ const ClientsInviteDialog: FC = () => {
           setErrorOpen={setErrorOpen}
         />
       </BaseDialog>
-      <CompleteDialog
+      <BaseDialog
         dialogTitle={INVITE_COMPLEATE_DIAROG_TITLE}
         open={completedOpen}
         onOpenChange={setCompletedOpen}
+        size={"sm"}
       >
-        {INVITE_COMPLEATE_DIAROG_DISPRICTION}
-      </CompleteDialog>
+        <div className="mb-10">
+          <p className="text-center text-xs whitespace-pre-wrap">
+            {INVITE_COMPLEATE_DIAROG_DISPRICTION}
+          </p>
+        </div>
+      </BaseDialog>
       <BaseDialog dialogTitle={ERROR_DIAROG_TITLE} open={errorOpen} onOpenChange={setErrorOpen}>
         <div></div>
       </BaseDialog>

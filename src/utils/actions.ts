@@ -1,4 +1,12 @@
 import { STATUS_IS_ACTIVE } from "@/constants"
+import {
+  DELETE_BUTTON_TEXT,
+  DELETE_DISCRIPTION,
+  DELETE_TITLE,
+  INVITE_BUTTON_TEXT,
+  INVITE_DISCRIPTION,
+  INVITE_TITLE,
+} from "@/constants/dialog"
 import type { Table } from "@tanstack/react-table"
 
 /**
@@ -19,4 +27,38 @@ export const getIsActiveStatusLabel = (id: string | undefined) => {
  */
 export const isPagination = <TData>(table: Table<TData>) => {
   return table.getFilteredRowModel().rows.length > table.getState().pagination.pageSize
+}
+
+/**
+ * ダイアログに表示する情報を取得
+ * @param mode ダイアログのモード "invite : 招待" or "delete : 削除"
+ * @returns
+ */
+export const getDialogInfo = (
+  mode: "invite" | "delete",
+): {
+  title: string
+  discription: string
+  buttonText: string
+} => {
+  switch (mode) {
+    case "invite":
+      return {
+        title: INVITE_TITLE,
+        discription: INVITE_DISCRIPTION,
+        buttonText: INVITE_BUTTON_TEXT,
+      }
+    case "delete":
+      return {
+        title: DELETE_TITLE,
+        discription: DELETE_DISCRIPTION,
+        buttonText: DELETE_BUTTON_TEXT,
+      }
+    default:
+      return {
+        title: "",
+        discription: "",
+        buttonText: "",
+      }
+  }
 }
