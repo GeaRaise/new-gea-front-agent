@@ -116,7 +116,11 @@ const ClientsInviteForm = (props: PropsType) => {
           )
         })}
         <div className="border-t-2 border-[#DEE2E6] pt-2">
-          <button className="flex gap-2 p-0 items-center hover:bg-none" onClick={addItem}>
+          <button
+            type="button"
+            className="flex gap-2 p-0 items-center hover:bg-none"
+            onClick={addItem}
+          >
             <PlusCircle className="text-[#A8A8A8]" />
             <span className="text-[#A8A8A8]">招待先を追加</span>
           </button>
@@ -124,8 +128,9 @@ const ClientsInviteForm = (props: PropsType) => {
         <div className="text-center mt-10">
           <SubmitButton
             type="submit"
-            className="rounded-none disabled:text-white disabled:bg-[#979797] text-white"
+            className="disabled:text-white disabled:bg-[#979797] text-white"
             variant={"secondary"}
+            size={"lg"}
             disabled={isDisabled(items)}
           >
             顧問先を招待する
