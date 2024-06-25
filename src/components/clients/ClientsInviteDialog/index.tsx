@@ -1,12 +1,12 @@
 "use client"
 import { BaseDialog } from "@/components/layouts/components"
 import { Button } from "@/components/ui/button"
-import { ERROR_DIAROG_TITLE } from "@/constants"
+import { ERROR_DIALOG_TITLE } from "@/constants"
 import {
-  INVITE_COMPLEATE_DIAROG_DISPRICTION,
-  INVITE_COMPLEATE_DIAROG_TITLE,
-  INVITE_DIAROG_DISCRIPTION,
-  INVITE_DIAROG_TITLE,
+  INVITE_COMPLEATE_DIALOG_DISPRICTION,
+  INVITE_COMPLEATE_DIALOG_TITLE,
+  INVITE_DIALOG_DISCRIPTION,
+  INVITE_DIALOG_TITLE,
 } from "@/constants/dialog"
 import { PlusCircle } from "lucide-react"
 import { type FC, useState } from "react"
@@ -21,7 +21,7 @@ const ClientsInviteDialog: FC = () => {
       <BaseDialog
         open={open}
         onOpenChange={setOpen}
-        dialogTitle={INVITE_DIAROG_TITLE}
+        dialogTitle={INVITE_DIALOG_TITLE}
         dialogTrigger={
           <Button
             variant="outline"
@@ -33,7 +33,7 @@ const ClientsInviteDialog: FC = () => {
           </Button>
         }
       >
-        <p className="text-center text-sm whitespace-pre-wrap">{INVITE_DIAROG_DISCRIPTION}</p>
+        <p className="text-center text-sm whitespace-pre-wrap">{INVITE_DIALOG_DISCRIPTION}</p>
         <ClientsInviteForm
           setOpen={setOpen}
           setCompletedOpen={setCompletedOpen}
@@ -41,18 +41,18 @@ const ClientsInviteDialog: FC = () => {
         />
       </BaseDialog>
       <BaseDialog
-        dialogTitle={INVITE_COMPLEATE_DIAROG_TITLE}
+        dialogTitle={INVITE_COMPLEATE_DIALOG_TITLE}
         open={completedOpen}
         onOpenChange={setCompletedOpen}
         size={"sm"}
       >
         <div className="mb-10">
           <p className="text-center text-xs whitespace-pre-wrap">
-            {INVITE_COMPLEATE_DIAROG_DISPRICTION}
+            {INVITE_COMPLEATE_DIALOG_DISPRICTION}
           </p>
         </div>
       </BaseDialog>
-      <BaseDialog dialogTitle={ERROR_DIAROG_TITLE} open={errorOpen} onOpenChange={setErrorOpen}>
+      <BaseDialog dialogTitle={ERROR_DIALOG_TITLE} open={errorOpen} onOpenChange={setErrorOpen}>
         <div></div>
       </BaseDialog>
     </>
