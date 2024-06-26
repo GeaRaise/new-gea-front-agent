@@ -86,7 +86,11 @@ const ClientsPopAction = ({
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-        <CustomDialogContent dialogTitle={dialogInfo.title} className="lg:max-w-[640px]">
+        <CustomDialogContent
+          dialogTitle={dialogInfo.title}
+          className="lg:max-w-[640px]"
+          isFooter={true}
+        >
           <p className="text-sm text-center whitespace-pre-wrap">{dialogInfo.discription}</p>
           <div className="mt-5 lg:mt-10">
             <Button variant={"secondary"} size={"lg"} className="text-white">

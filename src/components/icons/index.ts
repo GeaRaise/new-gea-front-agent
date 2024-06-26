@@ -1,6 +1,7 @@
 import { BellIcon } from "./BellIcon"
 import { CloseIcon } from "./CloseIcon"
 import { DashbordIcon } from "./DashbordIcon"
+import DownloadIcon from "./DownloadIcon"
 import { HomeIcon } from "./HomeIcon"
 import { ImportIcon } from "./ImportIcon"
 import { SidebarCloseIcon } from "./SidebarCloseIcon"
@@ -10,6 +11,7 @@ export {
   BellIcon,
   CloseIcon,
   DashbordIcon,
+  DownloadIcon,
   HomeIcon,
   ImportIcon,
   SidebarCloseIcon,

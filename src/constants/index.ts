@@ -54,4 +54,4 @@ export const STATUS_IS_ACTIVE = [
   },
 ]
 
-export const ERROR_DIAROG_TITLE = "エラーが発生しました。再度お試しください。"
+export const ERROR_DIALOG_TITLE = "エラーが発生しました。再度お試しください。"

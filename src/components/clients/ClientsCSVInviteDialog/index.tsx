@@ -10,9 +10,9 @@ import {
 } from "@/constants/dialog"
 import { PlusCircle } from "lucide-react"
 import { type FC, useState } from "react"
-import ClientsInviteForm from "../ClientsInviteForm"
+import ClientsCSVInviteForm from "../ClientsCSVInviteForm"
 
-const ClientsInviteDialog: FC = () => {
+const ClientsCSVInviteDialog: FC = () => {
   const [open, setOpen] = useState(false)
   const [completedOpen, setCompletedOpen] = useState(false)
   const [errorOpen, setErrorOpen] = useState(false)
@@ -29,12 +29,13 @@ const ClientsInviteDialog: FC = () => {
             className="border-[#A8A8A8] flex gap-2 hover:bg-[#A8A8A8]/10"
           >
             <PlusCircle className="text-[#A8A8A8]" size={20} />
-            <span className="text-[#A8A8A8]">新規招待</span>
+            <span className="text-[#A8A8A8]">新規招待(CSV一括インポート)</span>
           </Button>
         }
+        isFooter={false}
       >
         <p className="text-center text-sm whitespace-pre-wrap">{INVITE_DIALOG_DISCRIPTION}</p>
-        <ClientsInviteForm
+        <ClientsCSVInviteForm
           setOpen={setOpen}
           setCompletedOpen={setCompletedOpen}
           setErrorOpen={setErrorOpen}
@@ -59,4 +60,4 @@ const ClientsInviteDialog: FC = () => {
   )
 }
 
-export default ClientsInviteDialog
+export default ClientsCSVInviteDialog

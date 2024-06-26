@@ -1,7 +1,8 @@
 import { EMAIL_REGEX } from "@/constants/regex"
 import { post } from "@/lib/clients"
 import type { ClientInviteFormType } from "@/types/clients"
-import { useState } from "react"
+import { isCheckEmail } from "@/utils/serveractions"
+import { useEffect, useRef, useState } from "react"
 
 export const useFormItems = () => {
   const [items, setItems] = useState<ClientInviteFormType[]>([
@@ -16,6 +17,10 @@ export const useFormItems = () => {
       },
     },
   ])
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isScrollBottom, setIsScrollBottom] = useState<boolean>(false)
+
+  const scrollBottomRef = useRef<HTMLDivElement>(null)
 
   const checkEmail = async (email: string, index: number) => {
     // メールアドレスの形式チェック
@@ -61,6 +66,7 @@ export const useFormItems = () => {
     key: "companyName" | "first_name" | "last_name" | "email"
     value: string
   }) => {
+    setIsScrollBottom(false)
     const newItems = [...items]
     newItems[index] = {
       ...newItems[index],
@@ -74,6 +80,7 @@ export const useFormItems = () => {
   }
 
   const addItem = () => {
+    setIsScrollBottom(true)
     setItems([
       ...items,
       {
@@ -89,5 +96,54 @@ export const useFormItems = () => {
     ])
   }
 
-  return { items, handleChange, addItem }
+  /**
+   * ファイルインポート後処理
+   * @param uploadData インポートしたデータ
+   */
+  const uploadAccepted = async (uploadData: []) => {
+    setIsLoading(true)
+    const newData = uploadData.filter((item: [], index) => index !== 0 && item.length >= 4)
+    const importItems = await Promise.all(
+      newData.map(async (item) => {
+        // メールアドレスのバリデーション
+        const result = await isCheckEmail(item[3]).then((res) => {
+          if (res.status) {
+            return {
+              id: items.length,
+              companyName: item[0],
+              first_name: item[1],
+              last_name: item[2],
+              email: item[3],
+              errors: {
+                email: "",
+              },
+            }
+          } else {
+            return {
+              id: items.length,
+              companyName: item[0],
+              first_name: item[1],
+              last_name: item[2],
+              email: item[3],
+              errors: {
+                email: res.message,
+              },
+            }
+          }
+        })
+
+        return result
+      }),
+    )
+    setIsScrollBottom(true)
+    setItems([...items, ...importItems])
+    setIsLoading(false)
+  }
+
+  useEffect(() => {
+    if (isScrollBottom && scrollBottomRef.current) {
+      scrollBottomRef.current.scrollIntoView({ behavior: "smooth" })
+    }
+  }, [items, isScrollBottom, scrollBottomRef])
+  return { items, setItems, isLoading, handleChange, addItem, scrollBottomRef, uploadAccepted }
 }
