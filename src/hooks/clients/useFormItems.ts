@@ -18,6 +18,7 @@ export const useFormItems = () => {
     },
   ])
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isScrollBottom, setIsScrollBottom] = useState<boolean>(false)
 
   const scrollBottomRef = useRef<HTMLDivElement>(null)
 
@@ -65,6 +66,7 @@ export const useFormItems = () => {
     key: "companyName" | "first_name" | "last_name" | "email"
     value: string
   }) => {
+    setIsScrollBottom(false)
     const newItems = [...items]
     newItems[index] = {
       ...newItems[index],
@@ -78,6 +80,7 @@ export const useFormItems = () => {
   }
 
   const addItem = () => {
+    setIsScrollBottom(true)
     setItems([
       ...items,
       {
@@ -95,7 +98,7 @@ export const useFormItems = () => {
 
   /**
    * ファイルインポート後処理
-   * @param uploadData インポートしデータ
+   * @param uploadData インポートしたデータ
    */
   const uploadAccepted = async (uploadData: []) => {
     setIsLoading(true)
@@ -132,14 +135,15 @@ export const useFormItems = () => {
         return result
       }),
     )
+    setIsScrollBottom(true)
     setItems([...items, ...importItems])
     setIsLoading(false)
   }
 
   useEffect(() => {
-    if (scrollBottomRef.current) {
+    if (isScrollBottom && scrollBottomRef.current) {
       scrollBottomRef.current.scrollIntoView({ behavior: "smooth" })
     }
-  }, [items])
+  }, [items, isScrollBottom, scrollBottomRef])
   return { items, setItems, isLoading, handleChange, addItem, scrollBottomRef, uploadAccepted }
 }
