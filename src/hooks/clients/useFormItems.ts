@@ -1,7 +1,8 @@
 import { EMAIL_REGEX } from "@/constants/regex"
 import { post } from "@/lib/clients"
 import type { ClientInviteFormType } from "@/types/clients"
-import { useState } from "react"
+import { isCheckEmail } from "@/utils/serveractions"
+import { useEffect, useRef, useState } from "react"
 
 export const useFormItems = () => {
   const [items, setItems] = useState<ClientInviteFormType[]>([
@@ -16,6 +17,8 @@ export const useFormItems = () => {
       },
     },
   ])
+
+  const scrollBottomRef = useRef<HTMLDivElement>(null)
 
   const checkEmail = async (email: string, index: number) => {
     // メールアドレスの形式チェック
@@ -89,5 +92,51 @@ export const useFormItems = () => {
     ])
   }
 
-  return { items, handleChange, addItem }
+  /**
+   * ファイルインポート後処理
+   * @param uploadData インポートしデータ
+   */
+  const uploadAccepted = async (uploadData: []) => {
+    const newData = uploadData.filter((item: [], index) => index !== 0 && item.length >= 4)
+    const importItems = await Promise.all(
+      newData.map(async (item) => {
+        // メールアドレスのバリデーション
+        const result = await isCheckEmail(item[3]).then((res) => {
+          if (res.status) {
+            return {
+              id: items.length,
+              companyName: item[0],
+              first_name: item[1],
+              last_name: item[2],
+              email: item[3],
+              errors: {
+                email: "",
+              },
+            }
+          } else {
+            return {
+              id: items.length,
+              companyName: item[0],
+              first_name: item[1],
+              last_name: item[2],
+              email: item[3],
+              errors: {
+                email: res.message,
+              },
+            }
+          }
+        })
+
+        return result
+      }),
+    )
+    setItems([...items, ...importItems])
+  }
+
+  useEffect(() => {
+    if (scrollBottomRef.current) {
+      scrollBottomRef.current.scrollIntoView({ behavior: "smooth" })
+    }
+  }, [items])
+  return { items, setItems, handleChange, addItem, scrollBottomRef, uploadAccepted }
 }

@@ -20,6 +20,7 @@ type PropsType = ComponentProps<typeof Dialog> &
     children: ReactNode
     dialogTrigger?: ReactNode
     dialogTitle: string
+    isFooter?: boolean
   }
 
 /**
@@ -28,10 +29,11 @@ type PropsType = ComponentProps<typeof Dialog> &
  * @param triggerName トリガーボタン
  * @param dialogTitle ダイアログのタイトル
  * @param size ダイアログの最大サイズ
+ * @param isFooter フッターを表示するかどうか デフォルトはtrue
  * @returns
  */
 const BaseDialog: FC<PropsType> = (props) => {
-  const { children, dialogTitle, dialogTrigger, size } = props
+  const { children, dialogTitle, dialogTrigger, isFooter = true, size } = props
   return (
     <Dialog {...props}>
       {dialogTrigger ? (
@@ -39,7 +41,11 @@ const BaseDialog: FC<PropsType> = (props) => {
       ) : (
         <DialogTrigger asChild={true}></DialogTrigger>
       )}
-      <CustomDialogContent dialogTitle={dialogTitle} className={cn(dialogVariants({ size }))}>
+      <CustomDialogContent
+        dialogTitle={dialogTitle}
+        className={cn(dialogVariants({ size }))}
+        isFooter={isFooter}
+      >
         {children}
       </CustomDialogContent>
     </Dialog>

@@ -56,18 +56,20 @@ DialogContent.displayName = DialogPrimitive.Content.displayName
 
 type CustomDialogContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
   dialogTitle: string
+  isFooter: boolean
 }
 
 const CustomDialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   CustomDialogContentProps
->(({ className, children, dialogTitle, ...props }, ref) => (
+>(({ className, children, dialogTitle, isFooter, ...props }, ref) => (
   <DialogPortal>
     <DialogOverlay />
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed left-[50%] top-[50%] z-50 grid w-full overflow-y-auto translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 pb-10 lg:pb-20 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg",
+        isFooter && "pb-10 lg:pb-10",
+        "fixed left-[50%] top-[50%] z-50 grid w-full overflow-y-auto translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 pb-0 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg",
         className,
       )}
       {...props}
@@ -76,14 +78,16 @@ const CustomDialogContent = React.forwardRef<
         <h2 className="font-bold text-xl lg:text-2xl mb-5">{dialogTitle}</h2>
         {children}
       </div>
-      <DialogFooter className="flex justify-center items-center flex-col">
-        <DialogClose asChild={true}>
-          <Button type="button" variant="ghost" className="">
-            前の画面に戻る
-          </Button>
-        </DialogClose>
-      </DialogFooter>
-      <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+      {isFooter && (
+        <DialogFooter className={cn("flex justify-center items-center flex-col")}>
+          <DialogClose asChild={true}>
+            <Button type="button" variant="ghost">
+              前の画面に戻る
+            </Button>
+          </DialogClose>
+        </DialogFooter>
+      )}
+      <DialogPrimitive.Close className="fixed right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
         <CloseIcon />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>

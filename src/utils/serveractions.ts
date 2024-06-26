@@ -1,6 +1,8 @@
 "use server"
 
 import { BACKEND_URL } from "@/constants"
+import { EMAIL_REGEX } from "@/constants/regex"
+import { post } from "@/lib/clients"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
@@ -24,4 +26,39 @@ export const handleLogout = async () => {
       console.info("ログアウトできませんでした")
     }
   })
+}
+/**
+ * メールアドレスの形式&重複チェック
+ * @param email メールアドレス
+ * @returns
+ */
+
+export const isCheckEmail = async (email: string) => {
+  // メールアドレスの形式チェック
+  const results = email.match(EMAIL_REGEX)
+
+  // メールアドレスの形式が異なる場合はエラーを表示
+  if (results === null && email !== "") {
+    return {
+      status: false,
+      message: "※メールアドレスの形式が異なっています",
+    }
+  }
+
+  // メールアドレスの重複チェック
+  const response = await post("users/checkemail", { obj: { email: email } })
+
+  // メールアドレスが既に登録されている場合はエラーを表示
+  if (response.emailcheck) {
+    return {
+      status: false,
+      message: "※メールアドレスは既に登録されています",
+    }
+  }
+
+  // エラーがない場合はエラーをクリア
+  return {
+    status: true,
+    message: "",
+  }
 }
