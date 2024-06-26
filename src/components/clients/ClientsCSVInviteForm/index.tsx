@@ -1,10 +1,11 @@
 "use client"
-import { SubmitButton } from "@/components/elements"
+import { Spinner, SubmitButton } from "@/components/elements"
 import { ImportCSVReader } from "@/components/layouts/components"
 import { Button } from "@/components/ui/button"
 import { DialogClose, DialogFooter } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { useFormItems } from "@/hooks/clients/useFormItems"
+import { cn } from "@/lib/utils"
 import { PlusCircle } from "lucide-react"
 import { type Dispatch, type SetStateAction, useEffect } from "react"
 import { useFormState } from "react-dom"
@@ -22,7 +23,8 @@ const ClientsCSVInviteForm = (props: PropsType) => {
   // useFormStateカスタムフックを使用して、フォームの状態を管理
   const [formState, action] = useFormState(cilentsInvite, { success: false, message: "" })
   // useFormItemsカスタムフックを使用して、フォームの項目を管理
-  const { items, handleChange, addItem, scrollBottomRef, uploadAccepted } = useFormItems()
+  const { items, handleChange, addItem, scrollBottomRef, uploadAccepted, isLoading } =
+    useFormItems()
 
   // フォームの送信結果に応じてダイアログを表示
   useEffect(() => {
@@ -58,75 +60,81 @@ const ClientsCSVInviteForm = (props: PropsType) => {
             <div className="flex-1 pl-4">登録メールアドレス</div>
           </div>
         </div>
-        {items.map((item, index) => {
-          return (
-            <div key={index}>
-              <div className="flex px-1">
-                <div className="w-36 px-2 py-3">
-                  <Input
-                    className="border-2 border-gray-300 p-2 rounded-md focus:outline-none"
-                    placeholder="株式会社GeaRaise"
-                    value={item.companyName}
-                    onChange={(e) => {
-                      handleChange({
-                        index,
-                        key: "companyName",
-                        value: e.target.value,
-                      })
-                    }}
-                  />
+        {isLoading && (
+          <div className="flex justify-center py-4">
+            <Spinner />
+          </div>
+        )}
+        {!isLoading &&
+          items.map((item, index) => {
+            return (
+              <div key={index}>
+                <div className="flex px-1">
+                  <div className="w-36 px-2 py-3">
+                    <Input
+                      className="border-2 border-gray-300 p-2 rounded-md focus:outline-none"
+                      placeholder="株式会社GeaRaise"
+                      value={item.companyName}
+                      onChange={(e) => {
+                        handleChange({
+                          index,
+                          key: "companyName",
+                          value: e.target.value,
+                        })
+                      }}
+                    />
+                  </div>
+                  <div className="w-36 px-2 py-3">
+                    <Input
+                      className="border-2 border-gray-300 p-2 rounded-md focus:outline-none"
+                      placeholder="性"
+                      value={item.first_name}
+                      onChange={(e) => {
+                        handleChange({
+                          index,
+                          key: "first_name",
+                          value: e.target.value,
+                        })
+                      }}
+                    />
+                  </div>
+                  <div className="w-36 px-2 py-3">
+                    <Input
+                      className="border-2 border-gray-300 p-2 rounded-md focus:outline-none"
+                      placeholder="名"
+                      value={item.last_name}
+                      onChange={(e) => {
+                        handleChange({
+                          index,
+                          key: "last_name",
+                          value: e.target.value,
+                        })
+                      }}
+                    />
+                  </div>
+                  <div className="px-2 py-3 flex-1">
+                    <Input
+                      className="border-2 border-gray-300 p-2 rounded-md focus:outline-none"
+                      placeholder="example@gearaise.co.jp"
+                      type="email"
+                      defaultValue={item.email}
+                      onChange={(e) => {
+                        debouncer.call({
+                          index,
+                          key: "email",
+                          value: e.target.value,
+                        })
+                      }}
+                    />
+                  </div>
                 </div>
-                <div className="w-36 px-2 py-3">
-                  <Input
-                    className="border-2 border-gray-300 p-2 rounded-md focus:outline-none"
-                    placeholder="性"
-                    value={item.first_name}
-                    onChange={(e) => {
-                      handleChange({
-                        index,
-                        key: "first_name",
-                        value: e.target.value,
-                      })
-                    }}
-                  />
-                </div>
-                <div className="w-36 px-2 py-3">
-                  <Input
-                    className="border-2 border-gray-300 p-2 rounded-md focus:outline-none"
-                    placeholder="名"
-                    value={item.last_name}
-                    onChange={(e) => {
-                      handleChange({
-                        index,
-                        key: "last_name",
-                        value: e.target.value,
-                      })
-                    }}
-                  />
-                </div>
-                <div className="px-2 py-3 flex-1">
-                  <Input
-                    className="border-2 border-gray-300 p-2 rounded-md focus:outline-none"
-                    placeholder="example@gearaise.co.jp"
-                    type="email"
-                    defaultValue={item.email}
-                    onChange={(e) => {
-                      debouncer.call({
-                        index,
-                        key: "email",
-                        value: e.target.value,
-                      })
-                    }}
-                  />
-                </div>
+                {item.errors.email !== "" && <p className="text-red-500">{item.errors.email}</p>}
               </div>
-              {item.errors.email !== "" && <p className="text-red-500">{item.errors.email}</p>}
-            </div>
-          )
-        })}
+            )
+          })}
         <div ref={scrollBottomRef} />
         <DialogFooter className="sticky bottom-0 left-0 bg-white pb-10 lg:pb-20">
-          <div className="">
+          <div className={cn(isLoading ? "hidden" : "block")}>
             <div className="border-t-2 border-[#DEE2E6] pt-2">
               <button
                 type="button"

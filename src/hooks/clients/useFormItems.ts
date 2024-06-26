@@ -17,6 +17,7 @@ export const useFormItems = () => {
       },
     },
   ])
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const scrollBottomRef = useRef<HTMLDivElement>(null)
 
@@ -97,6 +98,7 @@ export const useFormItems = () => {
    * @param uploadData インポートしデータ
    */
   const uploadAccepted = async (uploadData: []) => {
+    setIsLoading(true)
     const newData = uploadData.filter((item: [], index) => index !== 0 && item.length >= 4)
     const importItems = await Promise.all(
       newData.map(async (item) => {
@@ -131,6 +133,7 @@ export const useFormItems = () => {
       }),
     )
     setItems([...items, ...importItems])
+    setIsLoading(false)
   }
 
   useEffect(() => {
@@ -138,5 +141,5 @@ export const useFormItems = () => {
       scrollBottomRef.current.scrollIntoView({ behavior: "smooth" })
     }
   }, [items])
-  return { items, setItems, handleChange, addItem, scrollBottomRef, uploadAccepted }
+  return { items, setItems, isLoading, handleChange, addItem, scrollBottomRef, uploadAccepted }
 }
