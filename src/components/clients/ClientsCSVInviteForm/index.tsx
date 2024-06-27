@@ -23,7 +23,7 @@ const ClientsCSVInviteForm = (props: PropsType) => {
   // useFormStateカスタムフックを使用して、フォームの状態を管理
   const [formState, action] = useFormState(cilentsInvite, { success: false, message: "" })
   // useFormItemsカスタムフックを使用して、フォームの項目を管理
-  const { items, handleChange, addItem, scrollBottomRef, uploadAccepted, isLoading } =
+  const { items, setItems, handleChange, addItem, scrollBottomRef, uploadAccepted, isLoading } =
     useFormItems()
 
   // フォームの送信結果に応じてダイアログを表示
@@ -31,6 +31,20 @@ const ClientsCSVInviteForm = (props: PropsType) => {
     if (formState.success) {
       setOpen(false)
       setCompletedOpen(true)
+    } else if (!formState.success && formState.dipricatedEmails) {
+      // 重複したメールアドレスのみをitemsに反映
+      const newItems = items
+        .map((item) =>
+          formState.dipricatedEmails.includes(item.email)
+            ? {
+                ...item,
+                errors: { ...item.errors, email: "※メールアドレスは既に登録されています" },
+              }
+            : item,
+        )
+        .filter((item) => item.errors.email !== "")
+      // エラーがあるデータのみをitemsに設定
+      setItems(newItems)
     } else if (!formState.success && formState.message !== "") {
       setOpen(false)
       setErrorOpen(true)
@@ -67,12 +81,25 @@ const ClientsCSVInviteForm = (props: PropsType) => {
         )}
         {!isLoading &&
           items.map((item, index) => {
+            // どれか1つでも入力されているかどうか
+            const isRowEmpty =
+              item.companyName !== "" ||
+              item.first_name !== "" ||
+              item.last_name !== "" ||
+              item.email !== ""
+
             return (
               <div key={index}>
                 <div className="flex px-1">
                   <div className="w-36 px-2 py-3">
                     <Input
-                      className="border-2 border-gray-300 p-2 rounded-md focus:outline-none"
+                      className={cn(
+                        isRowEmpty && item.companyName === ""
+                          ? "border-primary"
+                          : "border-gray-300",
+                        "border-2  p-2 rounded-md focus:outline-none",
+                      )}
+                      name="companyName"
                       placeholder="株式会社GeaRaise"
                       value={item.companyName}
                       onChange={(e) => {
@@ -86,7 +113,11 @@ const ClientsCSVInviteForm = (props: PropsType) => {
                   </div>
                   <div className="w-36 px-2 py-3">
                     <Input
-                      className="border-2 border-gray-300 p-2 rounded-md focus:outline-none"
+                      className={cn(
+                        isRowEmpty && item.first_name === "" ? "border-primary" : "border-gray-300",
+                        "border-2  p-2 rounded-md focus:outline-none",
+                      )}
+                      name="first_name"
                       placeholder="性"
                       value={item.first_name}
                       onChange={(e) => {
@@ -100,7 +131,11 @@ const ClientsCSVInviteForm = (props: PropsType) => {
                   </div>
                   <div className="w-36 px-2 py-3">
                     <Input
-                      className="border-2 border-gray-300 p-2 rounded-md focus:outline-none"
+                      className={cn(
+                        isRowEmpty && item.last_name === "" ? "border-primary" : "border-gray-300",
+                        "border-2  p-2 rounded-md focus:outline-none",
+                      )}
+                      name="last_name"
                       placeholder="名"
                       value={item.last_name}
                       onChange={(e) => {
@@ -114,13 +149,19 @@ const ClientsCSVInviteForm = (props: PropsType) => {
                   </div>
                   <div className="px-2 py-3 flex-1">
                     <Input
-                      className="border-2 border-gray-300 p-2 rounded-md focus:outline-none"
+                      className={cn(
+                        (isRowEmpty && item.email === "") || item.errors.email !== ""
+                          ? "border-primary"
+                          : "border-gray-300",
+                        "border-2  p-2 rounded-md focus:outline-none",
+                      )}
                       placeholder="example@gearaise.co.jp"
                       type="email"
+                      name="email"
                       defaultValue={item.email}
                       onChange={(e) => {
                         debouncer.call({
-                          index,
+                          index: item.id,
                           key: "email",
                           value: e.target.value,
                         })
@@ -158,11 +199,13 @@ const ClientsCSVInviteForm = (props: PropsType) => {
               </SubmitButton>
             </div>
           </div>
-          <DialogClose asChild={true} className="flex justify-center w-full mt-5">
-            <Button type="button" variant="ghost">
-              前の画面に戻る
-            </Button>
-          </DialogClose>
+          <div className="mt-5 w-full flex justify-center">
+            <DialogClose asChild={true}>
+              <Button type="button" variant="ghost" size={"default"}>
+                前の画面に戻る
+              </Button>
+            </DialogClose>
+          </div>
         </DialogFooter>
       </form>
     </>
