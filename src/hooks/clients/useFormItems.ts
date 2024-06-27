@@ -93,7 +93,7 @@ export const useFormItems = () => {
     const newData = uploadData
       .filter((item: [], index) => index !== 0 && item.length >= 4)
       .map((item: string[], index) => {
-        const emailCheck = item[3].match(EMAIL_REGEX)
+        const emailCheck = item[3].trim().match(EMAIL_REGEX)
         return {
           id: items.length + index,
           companyName: item[0],
