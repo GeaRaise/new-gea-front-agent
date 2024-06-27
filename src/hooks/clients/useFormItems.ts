@@ -1,7 +1,5 @@
 import { EMAIL_REGEX } from "@/constants/regex"
-import { post } from "@/lib/clients"
 import type { ClientInviteFormType } from "@/types/clients"
-import { isCheckEmail } from "@/utils/serveractions"
 import { useEffect, useRef, useState } from "react"
 
 export const useFormItems = () => {
@@ -38,16 +36,6 @@ export const useFormItems = () => {
     // メールアドレスの形式が異なる場合はエラーを表示
     if (results === null && email !== "") {
       item.errors.email = "※メールアドレスの形式が異なっています"
-      setItems(updateItems)
-      return
-    }
-
-    // メールアドレスの重複チェック
-    const response = await post("users/checkemail", { obj: { email: email } })
-
-    // メールアドレスが既に登録されている場合はエラーを表示
-    if (response.emailcheck) {
-      item.errors.email = "※メールアドレスは既に登録されています"
       setItems(updateItems)
       return
     }
@@ -102,41 +90,23 @@ export const useFormItems = () => {
    */
   const uploadAccepted = async (uploadData: []) => {
     setIsLoading(true)
-    const newData = uploadData.filter((item: [], index) => index !== 0 && item.length >= 4)
-    const importItems = await Promise.all(
-      newData.map(async (item) => {
-        // メールアドレスのバリデーション
-        const result = await isCheckEmail(item[3]).then((res) => {
-          if (res.status) {
-            return {
-              id: items.length,
-              companyName: item[0],
-              first_name: item[1],
-              last_name: item[2],
-              email: item[3],
-              errors: {
-                email: "",
-              },
-            }
-          } else {
-            return {
-              id: items.length,
-              companyName: item[0],
-              first_name: item[1],
-              last_name: item[2],
-              email: item[3],
-              errors: {
-                email: res.message,
-              },
-            }
-          }
-        })
-
-        return result
-      }),
-    )
+    const newData = uploadData
+      .filter((item: [], index) => index !== 0 && item.length >= 4)
+      .map((item: string[], index) => {
+        const emailCheck = item[3].match(EMAIL_REGEX)
+        return {
+          id: items.length + index,
+          companyName: item[0],
+          first_name: item[1],
+          last_name: item[2],
+          email: item[3],
+          errors: {
+            email: emailCheck ? "" : "※メールアドレスの形式が異なっています",
+          },
+        }
+      })
     setIsScrollBottom(true)
-    setItems([...items, ...importItems])
+    setItems([...items, ...newData])
     setIsLoading(false)
   }
 
