@@ -19,8 +19,13 @@ const ImportCSVReader = (props: PropsType) => {
     <div className="mb-5">
       <CSVReader
         onUploadAccepted={(results: { data: []; error: []; meta: [] }) => {
-          if (results.data) {
+          const dataFormats = results.data.filter(
+            (item: [], index) => index !== 0 && item.length >= 4,
+          )
+          if (dataFormats.length > 0) {
             uploadAccepted(results.data)
+          } else {
+            setIsError(true)
           }
           if (results.error) {
             setIsError(true)
@@ -46,7 +51,7 @@ const ImportCSVReader = (props: PropsType) => {
                     再度、データ内容・形式をご確認の上、アップロードを行ってください
                   </div>
                 )}
-                {acceptedFile && (
+                {acceptedFile && !isError && (
                   <div className="flex justify-center mt-5 text-[#A8A8A8]">
                     <span>{acceptedFile.name}</span>
                   </div>
